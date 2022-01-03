@@ -31,6 +31,10 @@
   --border-width: 5px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -88,4 +92,12 @@ code {
   border-right-color: var(--border-right-color);
   border-top-color: var(--border-top-color);
   border-bottom-color: var(--border-bottom-color);
+}
+
+/* grid Board */
+.grid-board {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
+  grid-gap: 0;
+  align-self: flex-start;
 }
