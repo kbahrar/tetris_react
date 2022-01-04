@@ -7,7 +7,7 @@ export const gridDefault = () => {
     const rows = 20
     const cols = 10
 
-    const array = Array.from({length: cols}, () => Array(rows).fill(0))
+    const array = Array.from({length: rows}, () => Array(cols).fill(0))
 
     return array
 }
