@@ -21,9 +21,15 @@
   --button-color-l: rgba(222, 222, 222, 1);
 
   --cols: 10;
-  --rows: 18;
-  --tile-size: 20px;
+  --rows: 20;
+  --tile-size: 50px;
   --border-width: 5px;
+}
+
+@media (max-width: 500px) {
+  :root {
+    --tile-size: 20px;
+  }
 }
 
 * {
@@ -144,4 +150,40 @@ code {
 /* App Header */
 .App-header {
   grid-area: h;
+}
+
+/* controls */
+.controls {
+  grid-area: b;
+  display: flex;
+  flex-direction: row;
+}
+
+.control-button {
+  --size: calc(var(--tile-size) * 2);
+  width: var(--size);
+  height: var(--size);
+  text-align: center;
+  display: block;
+  border-width: 5px;
+  border-top-color: var(--button-color-t);
+  border-left-color: var(--button-color-l);
+  border-right-color: var(--button-color-r);
+  border-bottom-color: var(--button-color-b);
+}
+
+/* Message Popup */
+.message-popup {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--tile-size) * 10);
+  height: calc(var(--tile-size) * 10);
+  background-color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.message-popup-hidden {
+  display: none;
 }
