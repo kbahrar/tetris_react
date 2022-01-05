@@ -1,24 +1,26 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { pause, restart, resume  } from "../actions"
+import { pause, restart, resume } from "../actions"
 
 export default function ScoreBoard(props) {
     const dispatch = useDispatch()
     const game = useSelector((state) => state.game)
     const { score, isRunning, gameOver } = game
 
+    const togglePlay = (event) => {
+        if (gameOver) { return }
+        if (isRunning) {
+            dispatch(pause())
+        } else {
+            dispatch(resume())
+        }
+    }
+
     return (
         <div className="score-board">
             <div>Score: {score}</div>
             <div>Level: 1</div>
-            <button className="score-board-button" onClick={(e) => {
-                if (gameOver) { return }
-                if (isRunning) {
-                    dispatch(pause())
-                } else {
-                    dispatch(resume())
-                }
-            }}>
+            <button className="score-board-button" onClick={togglePlay}>
                 {isRunning ? 'Pause' : 'Play'}
             </button>
             <button className="score-board-button" onClick={(e) => {
