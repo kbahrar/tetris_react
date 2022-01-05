@@ -7,7 +7,7 @@ import {
 
 const gameReducer = (state = defaultState(), action) => {
     const { shape, grid, x, y, rotation, nextShape, score, isRunning } = state
-
+    console.log(action)
     switch (action.type) {
         case ROTATE:
             const newRotation = nextRotation(shape, rotation)
@@ -53,15 +53,12 @@ const gameReducer = (state = defaultState(), action) => {
             return newState
 
         case RESUME:
-
-            return state
+            return {...state, isRunning: true}
 
         case PAUSE:
-
-            return state
+            return {...state, isRunning: false}
 
         case GAME_OVER:
-
             return state
 
         case RESTART:

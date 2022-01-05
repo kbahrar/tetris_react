@@ -24,7 +24,7 @@ export const defaultState = () => {
 		shape: randomShape(),
 		rotation: 0,
 		x: 5,
-		y: -4,
+		y: 0,
 		nextShape: randomShape(),
 		isRunning: true,
 		score: 0,
@@ -73,7 +73,7 @@ export const addBlockToGrid = (shape, grid, x, y, rotation) => {
 	for (let row = 0; row < block.length; row++) {
 		for (let col = 0; col < block[row].length; col++) {
 			if (block[row][col]) {
-				newGrid[row + y][col + y] = shape
+				newGrid[row + y][col + x] = shape
 			}
 		}
 	}
