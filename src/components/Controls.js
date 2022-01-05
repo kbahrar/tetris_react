@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch, } from 'react-redux'
-import { moveDown, moveLeft, moveRight, rotate } from '../actions'
+import { moveDown, moveLeft, moveRight, rotate, drop } from '../actions'
 
 export default function Controls(props) {
     const dispatch = useDispatch()
@@ -41,6 +41,7 @@ export default function Controls(props) {
                     // e.preventDefault
                     return
                 }
+                dispatch(drop())
             }}>Drop</button>
         </div>
     )

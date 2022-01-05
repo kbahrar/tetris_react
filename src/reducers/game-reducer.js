@@ -2,11 +2,76 @@ import {
     defaultState, nextRotation, canMoveTo, addBlockToGrid, checkRows, randomShape
 } from '../utils'
 import {
-    MOVE_RIGHT, MOVE_LEFT, MOVE_DOWN, ROTATE, PAUSE, RESUME, RESTART, GAME_OVER
+    MOVE_RIGHT, MOVE_LEFT, MOVE_DOWN, ROTATE, PAUSE, RESUME, RESTART, DROP
 } from "../actions"
 
 const gameReducer = (state = defaultState(), action) => {
     const { shape, grid, x, y, rotation, nextShape, score, isRunning } = state
+
+    // const addInGrid = () => {
+
+    // }
+
+    const moveDown = () => {
+        const maybeY = y + 1
+        if (canMoveTo(shape, grid, x, maybeY, rotation)) {
+            return { ...state, y: maybeY }
+        }
+
+        const obj = addBlockToGrid(shape, grid, x, y, rotation)
+        const newGrid = obj.grid
+        const gameOver = obj.gameOver
+
+        if (gameOver) {
+            const newState = { ...state }
+            newState.shape = 0
+            newState.grid = newGrid
+            return { ...state, gameOver: true }
+        }
+
+        const newState = defaultState()
+        newState.grid = newGrid
+        newState.shape = nextShape
+        newState.nextShape = randomShape()
+        newState.score = score
+        newState.isRunning = isRunning
+
+        // TODO: check and set level
+        newState.score = score + checkRows(newGrid)
+
+        return newState
+    }
+
+    const drop = () => {
+        var maybeY = y + 1
+        while (canMoveTo(shape, grid, x, maybeY, rotation)) {
+            maybeY++
+        }
+        maybeY -= 1
+        const obj = addBlockToGrid(shape, grid, x, maybeY, rotation)
+        const newGrid = obj.grid
+        const gameOver = obj.gameOver
+
+        if (gameOver) {
+            const newState = { ...state }
+            newState.shape = 0
+            newState.grid = newGrid
+            return { ...state, gameOver: true }
+        }
+
+        const newState = defaultState()
+        newState.grid = newGrid
+        newState.shape = nextShape
+        newState.nextShape = randomShape()
+        newState.score = score
+        newState.isRunning = isRunning
+
+        // TODO: check and set level
+        newState.score = score + checkRows(newGrid)
+
+        return newState
+    }
+
     switch (action.type) {
         case ROTATE:
             const newRotation = nextRotation(shape, rotation)
@@ -28,42 +93,16 @@ const gameReducer = (state = defaultState(), action) => {
             return state
 
         case MOVE_DOWN:
-            const maybeY = y + 1
-            if (canMoveTo(shape, grid, x, maybeY, rotation)) {
-                return { ...state, y: maybeY }
-            }
-
-            const obj = addBlockToGrid(shape, grid, x, y, rotation)
-            const newGrid = obj.grid
-            const gameOver = obj.gameOver
-
-            if (gameOver) {
-                const newState = {...state}
-                newState.shape = 0
-                newState.grid = newGrid
-                return { ...state, gameOver: true }
-            }
-
-            const newState = defaultState()
-            newState.grid = newGrid
-            newState.shape = nextShape
-            newState.nextShape = randomShape()
-            newState.score = score
-            newState.isRunning = isRunning
-
-            // TODO: check and set level
-            newState.score = score + checkRows(newGrid)
-
-            return newState
+            return moveDown()
 
         case RESUME:
-            return {...state, isRunning: true}
+            return { ...state, isRunning: true }
 
         case PAUSE:
-            return {...state, isRunning: false}
+            return { ...state, isRunning: false }
 
-        case GAME_OVER:
-            return state
+        case DROP:
+            return drop()
 
         case RESTART:
             return defaultState()

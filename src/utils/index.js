@@ -24,7 +24,7 @@ export const defaultState = () => {
 		shape: randomShape(),
 		rotation: 0,
 		x: 5,
-		y: 0,
+		y: -2,
 		nextShape: randomShape(),
 		isRunning: true,
 		score: 0,

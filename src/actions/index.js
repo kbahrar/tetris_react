@@ -4,7 +4,7 @@ export const MOVE_LEFT  = "MOVE_LEFT"
 export const MOVE_RIGHT = "MOVE_RIGHT"
 export const ROTATE     = "ROTATE"
 export const MOVE_DOWN  = "MOVE_DOWN"
-export const GAME_OVER  = "GAME_OVER" 
+export const DROP  = "DROP" 
 export const RESTART    = "RESTART"
 
 export const moveLeft = () => {
@@ -33,4 +33,8 @@ export const resume = () => {
 
 export const restart = () => {
     return { type: RESTART }
+}
+
+export const drop = () => {
+    return { type: DROP }
 }
