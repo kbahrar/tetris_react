@@ -4,7 +4,7 @@ import { moveDown, moveLeft, moveRight, rotate } from '../actions'
 
 export default function Controls(props) {
     const dispatch = useDispatch()
-    const isRunning = useSelector((state) => state.isRunning)
+    const isRunning = useSelector((state) => state.game.isRunning)
     return (
         <div className="controls">
             <button className="control-button" onClick={(e) => {dispatch(moveLeft)}}>Left</button>
