@@ -12,12 +12,12 @@ export default function MessagePopup(props) {
     
     if (!isRunning) {
         msg.title = 'Paused'
-        msg.message = 'You can resume your game by click in resume button'
+        msg.message = 'You can resume your game by click in play button'
     }
 
     if (gameOver) {
         msg.title = 'Game Over'
-        msg.message = 'You can restart your game by click in play button'
+        msg.message = 'You can restart your game by click in restart button'
     }
     
     return (

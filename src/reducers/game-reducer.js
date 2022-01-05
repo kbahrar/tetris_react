@@ -7,7 +7,6 @@ import {
 
 const gameReducer = (state = defaultState(), action) => {
     const { shape, grid, x, y, rotation, nextShape, score, isRunning } = state
-    console.log(action)
     switch (action.type) {
         case ROTATE:
             const newRotation = nextRotation(shape, rotation)
@@ -34,7 +33,17 @@ const gameReducer = (state = defaultState(), action) => {
                 return { ...state, y: maybeY }
             }
 
-            const newGrid = addBlockToGrid(shape, grid, x, y, rotation)
+            const obj = addBlockToGrid(shape, grid, x, y, rotation)
+            const newGrid = obj.grid
+            const gameOver = obj.gameOver
+
+            if (gameOver) {
+                const newState = {...state}
+                newState.shape = 0
+                newState.grid = newGrid
+                return { ...state, gameOver: true }
+            }
+
             const newState = defaultState()
             newState.grid = newGrid
             newState.shape = nextShape
@@ -42,12 +51,7 @@ const gameReducer = (state = defaultState(), action) => {
             newState.score = score
             newState.isRunning = isRunning
 
-            if (!canMoveTo(nextShape, newGrid, 0, 4, 0)) {
-                console.log('Game Over')
-                newState.shape = 0
-                return {...shape, gameOver: true}
-            }
-
+            // TODO: check and set level
             newState.score = score + checkRows(newGrid)
 
             return newState
@@ -62,8 +66,7 @@ const gameReducer = (state = defaultState(), action) => {
             return state
 
         case RESTART:
-
-            return state
+            return defaultState()
 
         default:
             return state
