@@ -23,7 +23,7 @@ function App() {
         <NextBlock />
         <ScoreBoard />
         <Controls />
-        {/* <MessagePopup /> */}
+        <MessagePopup />
       </div>
     </Provider>
   );
