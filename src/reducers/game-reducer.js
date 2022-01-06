@@ -8,16 +8,7 @@ import {
 const gameReducer = (state = defaultState(), action) => {
     const { shape, grid, x, y, rotation, nextShape, score, isRunning } = state
 
-    // const addInGrid = () => {
-
-    // }
-
-    const moveDown = () => {
-        const maybeY = y + 1
-        if (canMoveTo(shape, grid, x, maybeY, rotation)) {
-            return { ...state, y: maybeY }
-        }
-
+    const addInGrid = (y) => {
         const obj = addBlockToGrid(shape, grid, x, y, rotation)
         const newGrid = obj.grid
         const gameOver = obj.gameOver
@@ -42,34 +33,22 @@ const gameReducer = (state = defaultState(), action) => {
         return newState
     }
 
+    const moveDown = () => {
+        const maybeY = y + 1
+        if (canMoveTo(shape, grid, x, maybeY, rotation)) {
+            return { ...state, y: maybeY }
+        }
+
+        return addInGrid(y)
+    }
+
     const drop = () => {
         var maybeY = y + 1
         while (canMoveTo(shape, grid, x, maybeY, rotation)) {
             maybeY++
         }
         maybeY -= 1
-        const obj = addBlockToGrid(shape, grid, x, maybeY, rotation)
-        const newGrid = obj.grid
-        const gameOver = obj.gameOver
-
-        if (gameOver) {
-            const newState = { ...state }
-            newState.shape = 0
-            newState.grid = newGrid
-            return { ...state, gameOver: true }
-        }
-
-        const newState = defaultState()
-        newState.grid = newGrid
-        newState.shape = nextShape
-        newState.nextShape = randomShape()
-        newState.score = score
-        newState.isRunning = isRunning
-
-        // TODO: check and set level
-        newState.score = score + checkRows(newGrid)
-
-        return newState
+        return addInGrid(maybeY)
     }
 
     switch (action.type) {
