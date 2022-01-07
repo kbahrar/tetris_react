@@ -50,7 +50,7 @@ export default function Controls(props) {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    })
+    }, [isRunning])
 
     return (
         <div className="controls">
