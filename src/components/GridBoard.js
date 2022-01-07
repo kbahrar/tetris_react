@@ -31,6 +31,7 @@ export default function GridBoard(props) {
 
 			return <GridSquare
 				key={k}
+				classe={color > 0 ? 'grid-square-color' : 'grid-square'}
 				color={color} />
 		})
 	})

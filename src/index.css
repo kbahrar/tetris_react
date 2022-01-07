@@ -102,6 +102,18 @@ code {
 /* Grid Square */
 .grid-square {
   border-style: solid;
+  border-color: #93999b;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border-width: 1px;
+  /* border-left-color: var(--border-left-color);
+  border-right-color: var(--border-right-color);
+  border-top-color: var(--border-top-color);
+  border-bottom-color: var(--border-bottom-color); */
+}
+
+.grid-square-color {
+  border-style: solid;
   width: var(--tile-size);
   height: var(--tile-size);
   border-width: var(--border-width);
@@ -181,7 +193,8 @@ code {
   height: var(--size);
   text-align: center;
   display: block;
-  color: #132C33;
+  color: white;
+  background-color: #126E82;
   border-width: 5px;
   border-top-color: var(--button-color-t);
   border-left-color: var(--button-color-l);

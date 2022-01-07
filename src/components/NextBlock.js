@@ -10,7 +10,10 @@ export default function NextBlock(props) {
 
     const grid = box.map((rowArray, row) => {
         return rowArray.map((square, col) => {
-            return <GridSquare key={`${row}${col}`} color={square} />
+            return <GridSquare
+                key={`${row}${col}`}
+                classe={square > 0 ? 'grid-square-color' : 'grid-square'}
+                color={square} />
         })
     })
 
