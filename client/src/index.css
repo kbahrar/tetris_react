@@ -27,11 +27,6 @@
 }
 
 @font-face {
-	font-family: 'pixels';
-	src: url('./fonts/pixels.ttf');
-}
-
-@font-face {
 	font-family: 'GAME';
 	src: url('./fonts/Games-XvD2\ 2.ttf');
 }
@@ -106,10 +101,6 @@ code {
   width: var(--tile-size);
   height: var(--tile-size);
   border-width: 1px;
-  /* border-left-color: var(--border-left-color);
-  border-right-color: var(--border-right-color);
-  border-top-color: var(--border-top-color);
-  border-bottom-color: var(--border-bottom-color); */
 }
 
 .grid-square-color {
@@ -161,7 +152,7 @@ code {
   --col-center: calc(var(--tile-size) * 10);
   --grid-hight: calc(var(--tile-size) * 20);
 
-  width: calc(--tile-size) * (4 + 1 + 10 + 1 + 4);
+  width: calc(var(--tile-size) * (4 + 1 + 10 + 1 + 4));
   margin: auto;
   display: grid;
   justify-content: center;

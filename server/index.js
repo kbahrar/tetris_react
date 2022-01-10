@@ -1,32 +1,47 @@
 const express = require("express")
-const bodyParse = require("body-parser")
-const cors = require("cors");
+const path = require('path')
+const socketIo = require("socket.io");
 
 const app = express()
 
-app.use(bodyParser.json({limit: '10mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
-
-app.use(cors)
-
 // Middlwar for bad JSON request
-app.use((err, req, res, next) => {
-	if (err)
-		return res.json({error: 'something is wrong in json'})
-	next()
-})
+// app.use((err, req, res, next) => {
+// 	if (err)
+// 		return res.json({error: 'something is wrong in json'})
+// 	next()
+// })
 
-// Handle 404 - Keep this as a last route
-app.use(function(req, res, next) {
-    res.status(404);
-    res.send('<center><h1>Page not found</h1></center>');
+app.use(express.static('build'));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 });
 
-const PORT =  5000;
+// serve build as static folder
+// router.get('/', express.static('build'));
+
+// Handle 404 - Keep this as a last route
+app.get('*', (req, res) => {
+    res.redirect(301, '/');
+    return;
+});
+
+const PORT = 5000;
 
 const server = app.listen(
   PORT,
   console.log(`Server running on port ${PORT}`)
 );
+
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+})
+
+io.on("connection", (Socket) => {
+  console.log(Socket.id)
+});
 
 module.exports = server
