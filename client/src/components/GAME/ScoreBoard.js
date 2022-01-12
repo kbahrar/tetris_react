@@ -1,6 +1,6 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { pause, restart, resume } from "../actions"
+import { pause, restart, resume } from "../../actions"
 
 export default function ScoreBoard(props) {
     const dispatch = useDispatch()

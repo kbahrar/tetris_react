@@ -217,3 +217,48 @@ code {
   padding: 5px;
   margin-bottom: 15px;
 }
+
+/* username */
+.username-div {
+  grid-area: c;
+  margin: auto;
+  font-size: x-large;
+  width: 100%;
+}
+
+.username-label {
+  margin: 20px;
+  padding: 5px;
+  display: block;
+  text-align: left;
+  color: white;
+}
+
+.username-input {
+  padding: 10px;
+  display: block;
+  margin-bottom: 20px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--color-0);
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border:none;
+  cursor: grab;
+}
+
+input, textarea {
+  font-family:inherit;
+  font-size: inherit;
+}
+
+.error-span {
+  color: #c22828;
+  margin: 20px;
+}

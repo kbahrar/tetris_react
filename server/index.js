@@ -1,15 +1,9 @@
 const express = require("express")
 const path = require('path')
 const socketIo = require("socket.io");
+const Socket = require("./classes/socket.class")
 
 const app = express()
-
-// Middlwar for bad JSON request
-// app.use((err, req, res, next) => {
-// 	if (err)
-// 		return res.json({error: 'something is wrong in json'})
-// 	next()
-// })
 
 app.use(express.static('build'));
 
@@ -17,10 +11,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
 });
 
-// serve build as static folder
-// router.get('/', express.static('build'));
-
-// Handle 404 - Keep this as a last route
+// Handle 404
 app.get('*', (req, res) => {
     res.redirect(301, '/');
     return;
@@ -33,15 +24,7 @@ const server = app.listen(
   console.log(`Server running on port ${PORT}`)
 );
 
-const io = socketIo(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
-})
-
-io.on("connection", (Socket) => {
-  console.log(Socket.id)
-});
+const socket = new Socket()
+socket.run(server)
 
 module.exports = server

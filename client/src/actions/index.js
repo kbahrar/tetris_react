@@ -1,10 +1,11 @@
-export const PAUSE = "PAUSE"
+// GAME actions
+export const PAUSE      = "PAUSE"
 export const RESUME     = "RESUME"
 export const MOVE_LEFT  = "MOVE_LEFT"
 export const MOVE_RIGHT = "MOVE_RIGHT"
 export const ROTATE     = "ROTATE"
 export const MOVE_DOWN  = "MOVE_DOWN"
-export const DROP  = "DROP" 
+export const DROP       = "DROP" 
 export const RESTART    = "RESTART"
 
 export const moveLeft = () => {
@@ -37,4 +38,19 @@ export const restart = () => {
 
 export const drop = () => {
     return { type: DROP }
+}
+
+// AUTH actions
+export const AUTH_LOGIN  = "AUTH_LOGIN"
+export const LOGOUT = "LOGOUT"
+
+export const authLogin = (username) => {
+    return {
+        type: AUTH_LOGIN,
+        payload: username
+    }
+}
+
+export const logout = () => {
+    return {type: LOGOUT}
 }

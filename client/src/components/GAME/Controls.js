@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch, } from 'react-redux'
-import { moveDown, moveLeft, moveRight, rotate, drop } from '../actions'
+import { moveDown, moveLeft, moveRight, rotate, drop } from '../../actions'
 
 export default function Controls(props) {
     const keys = {
