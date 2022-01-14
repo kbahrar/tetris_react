@@ -15,16 +15,16 @@ function Sockets () {
         dispatch(connectSocket(socket))
 	}, []);
 
-    useEffect(() => {
-        if (auth) {
-            console.log(socket)
-            socket.on("login", (arg) => {
-                console.log(arg)
-            })
-            socket.emit("login", [auth, socket.id])
-        }
-        return ""
-    }, [auth])
+    // useEffect(() => {
+    //     if (auth) {
+    //         console.log(socket)
+    //         socket.on("login", (arg) => {
+    //             console.log(arg)
+    //         })
+    //         socket.emit("login", [auth, socket.id])
+    //     }
+    //     return ""
+    // }, [auth])
 
     return "";
 }

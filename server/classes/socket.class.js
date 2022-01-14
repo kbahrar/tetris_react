@@ -12,11 +12,13 @@ class Socket {
         if (this.io) {
             this.io.on("connection", (Socket) => {
 
-                Socket.on("login", (auth) => {
-                    var username = auth[0]
-                    var socket_id = auth[1]
-                    _sockets[username] = socket_id
-                    console.log(_sockets)
+                Socket.on("login", (auth, callback) => {
+                    if (this.checkUserName(auth[0])) {
+                        this.AddUser(auth)
+                        callback({ status: "ok" })
+                    }
+                    else
+                        callback({ status: "failed" })
                 });
 
                 Socket.on("disconnect", () => {
@@ -27,6 +29,21 @@ class Socket {
                 })
             });
         }
+    }
+
+    checkUserName(username) {
+        console.log(username)
+        for (let item in _sockets) {
+            if (item === username)
+                return false
+        }
+        return true
+    }
+
+    AddUser(auth) {
+        var username = auth[0];
+        var socket_id = auth[1];
+        _sockets[username] = socket_id;
     }
 }
 
