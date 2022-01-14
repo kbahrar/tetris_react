@@ -54,3 +54,13 @@ export const authLogin = (username) => {
 export const logout = () => {
     return {type: LOGOUT}
 }
+
+//  sockets
+export const SOCKET_CONNECT  = "SOCKET_CONNECT"
+
+export const connectSocket = (socket) => {
+    return {
+        type: SOCKET_CONNECT,
+        payload: socket
+    }
+}

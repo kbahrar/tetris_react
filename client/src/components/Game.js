@@ -7,8 +7,12 @@ import MessagePopup from './GAME/MessagePopup'
 
 export default function Game() {
     return (
-        <div>
-            
-        </div>
+        <>
+            <GridBoard />
+            <NextBlock />
+            <ScoreBoard />
+            <Controls />
+            <MessagePopup />
+        </>
     )
 }
