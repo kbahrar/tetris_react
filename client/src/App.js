@@ -12,18 +12,19 @@ function App() {
 
 	return (
 		<div className="App">
-			<Sockets />
-			<header className="App-header">
-				<h1 className="App-title">Tetris</h1>
-			</header>
-			{
-				!auth ?
-					<Login />
-					:
-					<Game />
-			}
+			<Sockets>
+				<header className="App-header">
+					<h1 className="App-title">Tetris</h1>
+				</header>
+				{
+					!auth ?
+						<Login />
+						:
+						<Game />
+				}
+			</Sockets>
 		</div>
-		
+
 	);
 }
 

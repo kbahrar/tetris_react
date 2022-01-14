@@ -20,14 +20,16 @@ export default function ScoreBoard(props) {
         <div className="score-board">
             <div className="info-dev">Score: {score}</div>
             <div className="info-dev">Level: 1</div>
-            <button className="control-button" onClick={togglePlay}>
-                {isRunning ? 'Pause' : 'Play'}
-            </button>
-            <button className="control-button" onClick={(e) => {
-                dispatch(restart())
-            }}>
-                Restart
-            </button>
-        </div>
+            <div className="controls">
+                <button className="control-button" onClick={togglePlay}>
+                    {isRunning ? 'Pause' : 'Play'}
+                </button>
+                <button className="control-button" onClick={(e) => {
+                    dispatch(restart())
+                }}>
+                    Restart
+                </button>
+            </div>
+        </div >
     )
 }

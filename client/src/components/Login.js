@@ -20,10 +20,8 @@ export default function Login (props) {
         }
         else {
             socket.emit("login", [username, socket.id], (res) => {
-                if (res.status === "ok") {
+                if (res.status === "ok")
                     dispatch(authLogin(username))
-                    setError(["none", ""])
-                }
                 else {
                     e.preventDefault()
                     setError(["block", "username already exists"])

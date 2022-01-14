@@ -134,6 +134,7 @@ code {
 /* Score Board */
 .score-board {
   grid-area: r;
+  margin-left: auto;
 }
 
 .score-board-button {
@@ -212,7 +213,7 @@ code {
 /* information dev */
 .info-dev{
   color: #b1bfc4;
-  text-align: left;
+  text-align: center;
   font-size: x-large;
   padding: 5px;
   margin-bottom: 15px;

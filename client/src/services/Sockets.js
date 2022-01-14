@@ -1,32 +1,20 @@
 import { io } from "socket.io-client";
-import {useEffect, useState} from "react"
-import {useDispatch, useSelector} from "react-redux"
-import {connectSocket} from "../actions"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { connectSocket } from "../actions"
 
-function Sockets () {
+function Sockets(props) {
     const ENDPOINT = "http://localhost:5000"
-    const [socket, setSocket] = useState("")
-    const auth = useSelector(state => state.auth)
+    const [socket, setSocket] = useState(null)
     const dispatch = useDispatch()
 
     useEffect(() => {
-		const socket = io(ENDPOINT)
+        const socket = io(ENDPOINT)
         setSocket(socket)
         dispatch(connectSocket(socket))
-	}, []);
+    }, []);
 
-    // useEffect(() => {
-    //     if (auth) {
-    //         console.log(socket)
-    //         socket.on("login", (arg) => {
-    //             console.log(arg)
-    //         })
-    //         socket.emit("login", [auth, socket.id])
-    //     }
-    //     return ""
-    // }, [auth])
-
-    return "";
+    return props.children;
 }
 
 export default Sockets

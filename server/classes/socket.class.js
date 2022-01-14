@@ -32,7 +32,6 @@ class Socket {
     }
 
     checkUserName(username) {
-        console.log(username)
         for (let item in _sockets) {
             if (item === username)
                 return false
