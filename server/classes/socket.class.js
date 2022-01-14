@@ -1,4 +1,5 @@
 const socketIo = require("socket.io");
+const Player = require("./player.class")
 const { ORIGIN } = require("../config")
 var _sockets = []
 class Socket {
@@ -43,6 +44,7 @@ class Socket {
         var username = auth[0];
         var socket_id = auth[1];
         _sockets[username] = socket_id;
+        new Player(username)
     }
 }
 
