@@ -6,6 +6,7 @@ import Sockets from './services/Sockets';
 
 import Game from './components/Game';
 import Login from './components/Login';
+import Rooms from './components/Rooms';
 
 function App() {
 	var auth = useSelector((state) => state.auth)
@@ -16,12 +17,13 @@ function App() {
 				<header className="App-header">
 					<h1 className="App-title">Tetris</h1>
 				</header>
-				{
+				{/* {
 					!auth ?
 						<Login />
 						:
 						<Game />
-				}
+				} */}
+				<Rooms />
 			</Sockets>
 		</div>
 
