@@ -1,10 +1,24 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import { authLogin } from "../actions"; 
-// import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 export default function Users(props) {
-    const [users, setUsers] = useState(["kamal", "lamak", "opsa", "kola", "hohala"])
+    const [users, setUsers] = useState([])
+    const socket = useSelector(state => state.socket)
+
+    useEffect(() => {
+        console.log("hii")
+        if (socket) {
+            socket.emit("users")
+
+            socket.on("users", (data) => {
+                console.log(data);
+                if (data)
+                    setUsers(data)
+            })
+        }
+    }, [socket])
 
     return (
         <div className="users-online">

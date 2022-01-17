@@ -22,12 +22,19 @@ class Socket {
                         callback({ status: "failed" })
                 });
 
+                Socket.on("users", () => {
+                    let users = this.GetUsers();
+                    this.io.emit("users", (users))
+                })
+
                 Socket.on("disconnect", () => {
                     for (let item in _sockets) {
                         if (_sockets[item] === Socket.id)
                             delete _sockets[item]
                     }
-                })
+                    let users = this.GetUsers();
+                    this.io.emit("users", (users))
+                });
             });
         }
     }
@@ -45,6 +52,14 @@ class Socket {
         var socket_id = auth[1];
         _sockets[username] = socket_id;
         new Player(username)
+    }
+
+    GetUsers() {
+        var users = []
+        for (let item in _sockets) {
+            users.push(item)
+        }
+        return users
     }
 }
 

@@ -13,12 +13,10 @@ export default function Chat(props) {
             </div>
             <div className="chat-group">
                 {users.map((item, index) => (
-                    <>
-                        <div className="message" key={index}>
-                            <span className="message-sender">{item}
-                            </span> : {item}
-                        </div>
-                    </>
+                    <div className="message" key={index}>
+                        <span className="message-sender">{item}
+                        </span> : {item}
+                    </div>
                 ))}
             </div>
             <div className="form-room"><input type="text" className="input-room" /> <div className="button-room">SEND</div> </div>
