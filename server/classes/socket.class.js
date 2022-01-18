@@ -27,6 +27,13 @@ class Socket {
                     this.io.emit("users", (users))
                 })
 
+                Socket.on("chat", (msg) => {
+                    this.io.emit("chat", ({
+                        sender: msg[0],
+                        msg: msg[1]
+                    }))
+                })
+
                 Socket.on("disconnect", () => {
                     for (let item in _sockets) {
                         if (_sockets[item] === Socket.id)

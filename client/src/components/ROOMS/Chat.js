@@ -1,10 +1,39 @@
 import React from "react";
-import { useState } from "react";
-// import { authLogin } from "../actions"; 
-// import { useDispatch, useSelector } from 'react-redux'
+import { useState, useEffect } from "react";
+import { useSelector } from 'react-redux'
 
 export default function Chat(props) {
-    const [users, setUsers] = useState(["kamal", "lamak", "opsa", "kola", "hohala"])
+    const [chat, setChat] = useState([]);
+    const [msg, setMsg] = useState("");
+    const socket = useSelector(state => state.socket);
+    const auth = useSelector(state => state.auth);
+
+    const typeMsg = (e) => {
+        setMsg(e.target.value)
+    }
+
+    const sendMsg = (e) => {
+        if (!msg)
+            e.preventDefault()
+        else {
+            socket.emit("chat", [auth, msg])
+            setMsg("")
+        }
+    }
+
+    useEffect(() => {
+        if (socket) {
+            socket.on("chat", (data) => {
+                let msg = chat;
+                msg[msg.length] = data;
+                setChat([...msg])
+            })
+
+            return () => {
+                socket.off("chat")
+            }
+        }
+    }, [socket])
 
     return (
         <div className="chat">
@@ -12,14 +41,26 @@ export default function Chat(props) {
                 chat
             </div>
             <div className="chat-group">
-                {users.map((item, index) => (
+                {chat.map((item, index) => (
                     <div className="message" key={index}>
-                        <span className="message-sender">{item}
-                        </span> : {item}
+                        <span className="message-sender">
+                            {item.sender}
+                        </span> : {item.msg}
                     </div>
                 ))}
             </div>
-            <div className="form-room"><input type="text" className="input-room" /> <div className="button-room">SEND</div> </div>
+            <div className="form-room">
+                <input
+                    type="text"
+                    className="input-room"
+                    placeholder="type message ..."
+                    onChange={typeMsg}
+                    value={msg}
+                />
+                <div className="button-room" onClick={sendMsg}>
+                    SEND
+                </div>
+            </div>
         </div>
     )
 }
