@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import { authLogin } from "../actions"; 
 import { useSelector } from 'react-redux'
 
 export default function Users(props) {
@@ -8,7 +7,6 @@ export default function Users(props) {
     const socket = useSelector(state => state.socket)
 
     useEffect(() => {
-        console.log("hii")
         if (socket) {
             socket.emit("users")
 

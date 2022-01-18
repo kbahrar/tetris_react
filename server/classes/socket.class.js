@@ -1,7 +1,10 @@
 const socketIo = require("socket.io");
 const Player = require("./player.class")
+const Room = require('./room.class')
+
 const { ORIGIN } = require("../config")
 var _sockets = []
+
 class Socket {
     run(server) {
         this.io = socketIo(server, {
@@ -32,6 +35,25 @@ class Socket {
                         sender: msg[0],
                         msg: msg[1]
                     }))
+                })
+
+                Socket.on("list room", () => {
+                    let rooms = Room.getRoomsNames();
+                    console.log(rooms)
+                    Socket.emit("list room", rooms);
+                })
+
+                Socket.on("create room", (data, callback) => {
+                    if (Room.getRoom(data[0])) {
+                        callback({status: "failed"})
+                    }
+                    else {
+                        Player.createRoom(data[0], data[1])
+                        let rooms = Room.getRoomsNames();
+                        console.log(rooms)
+                        this.io.emit("list room", rooms);
+                        callback({status: "ok"})
+                    }
                 })
 
                 Socket.on("disconnect", () => {
