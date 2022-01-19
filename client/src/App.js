@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import {
 	Routes,
 	Route,
-	useNavigate
+	useNavigate,
+	HashRouter
 } from "react-router-dom";
 
 import Sockets from './services/Sockets';
@@ -14,15 +15,18 @@ import Login from './components/Login';
 import Rooms from './components/Rooms';
 
 function App() {
-	var auth = useSelector((state) => state.auth)
+	const auth = useSelector((state) => state.auth)
+	const room = useSelector((state) => state.room)
 	const navigate = useNavigate()
 
 	React.useEffect(() => {
 		if (!auth)
 			navigate("/");
+		else if (room)
+			navigate(`${room.name}[${auth}]`)
 		else
 			navigate("/rooms")
-	}, [auth])
+	}, [auth, room])
 
 	return (
 		<div className="App">
@@ -33,7 +37,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Login />} />
 					<Route path="rooms" element={<Rooms />} />
-					<Route path="game" element={<Game />} />
+					<Route path=":room[:username]" element={<Game />} />
 					<Route path="*" element={<Login />} />
 				</Routes>
 			</Sockets>

@@ -64,3 +64,14 @@ export const connectSocket = (socket) => {
         payload: socket
     }
 }
+
+// room
+export const ROOM = "ROOM"
+export const EXIT_ROOM = "EXIT_ROOM"
+
+export const joinRoom = (room) => {
+    return {
+        type: ROOM,
+        payload: room
+    }
+}
