@@ -100,3 +100,13 @@ export const setError = (error) => {
 export const removeError = () => {
     return {type: NoERROR}
 }
+
+// users
+export const USERS = "USERS"
+
+export const setUsers = (users) => {
+    return {
+        type: USERS,
+        payload: users
+    }
+}

@@ -10,6 +10,14 @@ class Player {
         _players[this.name] = this
     }
 
+    static getPlayersNames() {
+        return Object.keys(_players);
+    }
+
+    static getPlayers () {
+        return _players
+    }
+
     static getPlayer (name) {
         return _players[name]
     }

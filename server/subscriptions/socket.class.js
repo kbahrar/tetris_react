@@ -16,21 +16,18 @@ module.exports = class SocketSubscription {
     }
 
     handleEvents() {
-        this.socket.on("list room", this.listRoom.bind(this))
+        this.socket.on("list room", this.listRoom.bind(this));
+        this.socket.on("users", this.GetUsers.bind(this));
     }
 
     listRoom() {
         let rooms = Room.getRoomsNames();
-        console.log(rooms)
         this.socket.emit("list room", rooms);
     }
 
     GetUsers() {
-        var users = []
-        for (let item in _sockets) {
-            users.push(item)
-        }
-        return users
+        var users = Player.getPlayersNames();
+        this.io.emit("users", users);
     }
 
     handleError(error) {

@@ -5,6 +5,7 @@ import socketReducer from './socket_reducer'
 import roomReducer from './room-reducer'
 import roomsReducer from './rooms-reducer'
 import errorReducer from './error-reducer'
+import usersReducer from './users-reducer'
 
 const reducers = combineReducers({
     game: gameReducer,
@@ -12,7 +13,8 @@ const reducers = combineReducers({
     socket: socketReducer,
     room: roomReducer,
     rooms: roomsReducer,
-    error: errorReducer
+    error: errorReducer,
+    users: usersReducer
 })
 
 export default reducers

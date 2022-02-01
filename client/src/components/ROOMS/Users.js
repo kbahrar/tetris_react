@@ -1,20 +1,14 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from 'react-redux'
 
 export default function Users(props) {
-    const [users, setUsers] = useState([])
     const socket = useSelector(state => state.socket)
+    const users = useSelector(state => state.users)
 
     useEffect(() => {
         if (socket) {
             socket.emit("users")
-
-            socket.on("users", (data) => {
-                console.log(data);
-                if (data)
-                    setUsers(data)
-            })
         }
     }, [socket])
 
