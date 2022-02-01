@@ -3,12 +3,16 @@ import gameReducer from './game-reducer'
 import authReducer from './auth-reducer'
 import socketReducer from './socket_reducer'
 import roomReducer from './room-reducer'
+import roomsReducer from './rooms-reducer'
+import errorReducer from './error-reducer'
 
 const reducers = combineReducers({
     game: gameReducer,
     auth: authReducer,
     socket: socketReducer,
-    room: roomReducer
+    room: roomReducer,
+    rooms: roomsReducer,
+    error: errorReducer
 })
 
 export default reducers

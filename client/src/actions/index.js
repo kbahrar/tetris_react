@@ -75,3 +75,28 @@ export const joinRoom = (room) => {
         payload: room
     }
 }
+
+// rooms
+export const ROOMS = "ROOMS"
+
+export const setRooms = (rooms) => {
+    return {
+        type: ROOMS,
+        payload: rooms
+    }
+}
+
+// errors
+export const ERROR = "ERROR"
+export const NoERROR = "NoERROR"
+
+export const setError = (error) => {
+    return {
+        type: ERROR,
+        payload: error
+    }
+}
+
+export const removeError = () => {
+    return {type: NoERROR}
+}

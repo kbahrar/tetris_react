@@ -1,13 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { authLogin } from "../actions"; 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { io } from "socket.io-client";
+import { connectSocket } from "../actions"
 
 export default function Login (props) {
+    const ENDPOINT = "http://localhost:5000";
     const [username, setUserName] = useState("");
     const [error, setError] = useState(["none", ""]);
+    const errorState = useSelector((state) => state.error);
     const dispatch = useDispatch()
-    const socket = useSelector((state) => state.socket)
 
     const changeUsername = (e) => {
         setUserName(e.target.value)
@@ -19,16 +22,24 @@ export default function Login (props) {
             setError(["block", "you should enter a username first"])
         }
         else {
-            socket.emit("login", [username, socket.id], (res) => {
-                if (res.status === "ok")
-                    dispatch(authLogin(username))
-                else {
-                    e.preventDefault()
-                    setError(["block", "username already exists"])
-                }
+            const socket = io(ENDPOINT, {
+                withCredentials: true,
             })
+            document.cookie = `name=${username}`
+            dispatch(connectSocket(socket))
+            socket.on("connect_error", (err) => {
+                setError(["block", err.message]) // prints the message associated with the error
+            });
         }
     }
+
+    useEffect(() => {
+        if (errorState)
+            setError(["block", errorState]);
+        else
+            setError(["none", ""]);
+    }, [errorState]);
+    
 
     return (
         <div className="username-div">

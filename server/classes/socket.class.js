@@ -1,94 +1,88 @@
 const socketIo = require("socket.io");
+const socketCookieParser = require('socket.io-cookie-parser');
+const SocketSubScription = require('../subscriptions/socket.class');
 const Player = require("./player.class")
 const Room = require('./room.class')
 
 const { ORIGIN } = require("../config")
-var _sockets = []
+const _sockets = {};
 
 class Socket {
     run(server) {
         this.io = socketIo(server, {
             cors: {
                 origin: ORIGIN,
+                credentials: true,
             }
         })
 
         if (this.io) {
-            this.io.on("connection", (Socket) => {
+            this.io.use(socketCookieParser())
+            this.io.use(this.middleware)
+            this.io.on('connect', ((socket) => _sockets[socket.username] = new SocketSubScription(this, socket)).bind(this))
+            // this.io.on("connect", (Socket) => {
 
-                Socket.on("login", (auth, callback) => {
-                    if (this.checkUserName(auth[0])) {
-                        this.AddUser(auth)
-                        callback({ status: "ok" })
-                    }
-                    else
-                        callback({ status: "failed" })
-                });
+                // Socket.on("login", this.login.bind(this));
 
-                Socket.on("users", () => {
-                    let users = this.GetUsers();
-                    this.io.emit("users", (users))
-                })
+                // Socket.on("users", () => {
+                //     let users = this.GetUsers();
+                //     this.io.emit("users", (users))
+                // })
 
-                Socket.on("chat", (msg) => {
-                    this.io.emit("chat", ({
-                        sender: msg[0],
-                        msg: msg[1]
-                    }))
-                })
+                // Socket.on("chat", (msg) => {
+                //     this.io.emit("chat", ({
+                //         sender: msg[0],
+                //         msg: msg[1]
+                //     }))
+                // })
 
-                Socket.on("list room", () => {
-                    let rooms = Room.getRoomsNames();
-                    console.log(rooms)
-                    Socket.emit("list room", rooms);
-                })
+                // Socket.on("list room", () => {
+                //     let rooms = Room.getRoomsNames();
+                //     console.log(rooms)
+                //     Socket.emit("list room", rooms);
+                // })
 
-                Socket.on("create room", (data, callback) => {
-                    if (Room.getRoom(data[0])) {
-                        callback({status: "failed"})
-                    }
-                    else {
-                        Player.createRoom(data[0], data[1])
-                        let rooms = Room.getRoomsNames();
-                        console.log(rooms)
-                        this.io.emit("list room", rooms);
-                        callback({status: "ok"})
-                    }
-                })
+                // Socket.on("create room", (data, callback) => {
+                //     if (Room.getRoom(data[0])) {
+                //         callback({status: "failed"})
+                //     }
+                //     else {
+                //         Player.createRoom(data[0], data[1])
+                //         let rooms = Room.getRoomsNames();
+                //         console.log(rooms)
+                //         this.io.emit("list room", rooms);
+                //         callback({status: "ok"})
+                //     }
+                // })
 
-                Socket.on("disconnect", () => {
-                    for (let item in _sockets) {
-                        if (_sockets[item] === Socket.id)
-                            delete _sockets[item]
-                    }
-                    let users = this.GetUsers();
-                    this.io.emit("users", (users))
-                });
-            });
+                // Socket.on("disconnect", () => {
+                //     for (let item in _sockets) {
+                //         if (_sockets[item] === Socket.id)
+                //             delete _sockets[item]
+                //     }
+                //     let users = this.GetUsers();
+                //     this.io.emit("users", (users))
+                // });
+            // });
         }
     }
 
-    checkUserName(username) {
-        for (let item in _sockets) {
-            if (item === username)
-                return false
-        }
-        return true
+    getSocket(username) {
+        return _sockets[username]
     }
-
-    AddUser(auth) {
-        var username = auth[0];
-        var socket_id = auth[1];
-        _sockets[username] = socket_id;
-        new Player(username)
+    removeSocket(username) {
+        delete _sockets[username]
     }
-
-    GetUsers() {
-        var users = []
-        for (let item in _sockets) {
-            users.push(item)
+    middleware(socket, next) {
+        if (socket?.request?.cookies?.name) {
+            socket.username = socket.request.cookies.name
+            return next()
         }
-        return users
+        return next(new Error('not authorized'))
+    }
+    close(cb) {
+        if (this.io)
+            this.io.close(cb)
     }
 }
 

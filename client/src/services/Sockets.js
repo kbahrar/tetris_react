@@ -1,18 +1,29 @@
-import { io } from "socket.io-client";
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { connectSocket } from "../actions"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {authLogin, setRooms, setError, removeError} from "../actions"
 
 function Sockets(props) {
-    const ENDPOINT = "http://localhost:5000"
-    const [socket, setSocket] = useState(null)
+    const socket = useSelector((state) => state.socket);
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const socket = io(ENDPOINT)
-        setSocket(socket)
-        dispatch(connectSocket(socket))
-    }, []);
+        if (socket) {
+            socket.on("connected", (player) => {
+                dispatch(removeError())
+                dispatch(authLogin(player))
+                socket.emit('list room')
+            })
+
+            socket.on("list room", (rooms) => {
+                dispatch(setRooms(rooms))
+            })
+
+            socket.on("error", (msg) => {
+                dispatch(setError(msg))
+            })
+        }
+    }, [socket]);
+    
 
     return props.children;
 }
