@@ -26,6 +26,8 @@
   --border-width: 5px;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Eczar|Work+Sans');
+
 @font-face {
 	font-family: 'GAME';
 	src: url('./fonts/Games-XvD2\ 2.ttf');
@@ -427,4 +429,47 @@ input, textarea {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #5bbdd3; 
+}
+
+/* Alert Error */
+.alert-error{
+  min-height:100px;
+  max-width:400px;
+  background-color:rgba(240, 70, 70, 0.781);
+  margin: 10px auto;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 50px;
+  border: solid 1px white;
+  box-shadow: 5px 10px rgba(255, 255, 255, 0.616);
+}
+
+.icon{
+  align-items: flex-start;
+  height: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  /* width: 100%; */
+  color: white;
+}
+
+.icon-close{
+  align-items: flex-start;
+  height: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  /* width: 100%; */
+  cursor: pointer;
+  color: white;
+}
+
+.msg-err{
+  font-family: 'Work Sans';
+  font-size: 0.8em;
+  font-weight: bolder;
+  color: white;
 }
