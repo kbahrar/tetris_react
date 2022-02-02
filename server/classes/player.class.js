@@ -27,7 +27,20 @@ class Player {
             this.room = new Room(roomName, this)
             return this.room
         }
-        return false
+        throw new Error('Player already in a room');
+    }
+
+    joinRoom (roomName) {
+        if (!this.room) {
+            const room = Room.getRoom(roomName);
+            if (!room) throw new Error('room doesnt exist')
+            if (room.add(this))
+                this.room = room
+            else
+                this.room = new Room(roomName, this)
+            return true
+        }
+        throw new Error('Player already in a room');
     }
 }
 

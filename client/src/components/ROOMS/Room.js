@@ -24,7 +24,16 @@ export default function Room(props) {
             e.preventDefault()
         else {
             setRoom("")
-            socket.emit("create room", room)
+            if (socket) {
+                socket.emit("create room", room)
+                socket.emit("list room")
+            }
+        }
+    }
+
+    const joinRoom = (name) => {
+        if (socket) {
+            socket.emit("join room", name)
         }
     }
 
@@ -40,6 +49,7 @@ export default function Room(props) {
                         <div
                             key={"button-" + index}
                             className="join-room"
+                            onClick={() => joinRoom(item)}
                         >
                             JOIN
                         </div>

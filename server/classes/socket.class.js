@@ -78,10 +78,6 @@ class Socket {
         }
         return next(new Error('not authorized'))
     }
-    close(cb) {
-        if (this.io)
-            this.io.close(cb)
-    }
 }
 
 module.exports = Socket;

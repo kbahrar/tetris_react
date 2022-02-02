@@ -20,11 +20,12 @@ module.exports = class SocketSubscription {
         this.socket.on("list room", this.listRoom.bind(this));
         this.socket.on("users", this.GetUsers.bind(this));
         this.socket.on("create room", this.CreateRoom.bind(this));
+        this.socket.on("join room", this.JoinRoom.bind(this));
     }
 
     listRoom() {
         let rooms = Room.getRoomsNames();
-        this.socket.emit("list room", rooms);
+        this.io.emit("list room", rooms);
     }
 
     GetUsers() {
@@ -35,6 +36,20 @@ module.exports = class SocketSubscription {
     CreateRoom (name) {
         try {
             const room = RoomSubscription.create.call(this, name);
+            if (room) {
+                this.socket.join(room.name);
+                this.socket.emit('room joined', room)
+            }
+        }
+        catch (error) {
+            this.handleError(error);
+        }
+    }
+
+    JoinRoom (name) {
+        try {
+            const room = RoomSubscription.join.call(this, name);
+            console.log(room)
             if (room) {
                 this.socket.join(room.name);
                 this.socket.emit('room joined', room)

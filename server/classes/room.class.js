@@ -28,6 +28,17 @@ class Room {
     static getRoom(name) {
         return _Rooms[name]
     }
+
+    add(player) {
+        if (!player) throw new Error('incorrect player')
+        if (this.isLocked)
+            throw new Error("can't join this room")
+        if (!this.players[player.name]) {
+            this.players[player.name] = player
+            return true
+        }
+        return false
+    }
 }
 
 module.exports = Room;
