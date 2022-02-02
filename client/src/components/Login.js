@@ -1,7 +1,7 @@
 import React from "react";
 import Error from "./UTILS/Error";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { io } from "socket.io-client";
 import { connectSocket, setError } from "../actions";
 
@@ -25,6 +25,8 @@ export default function Login (props) {
             })
             document.cookie = `name=${username}`
             dispatch(connectSocket(socket))
+            if (!socket.connected)
+                dispatch(setError("failed to connect"))
         }
     }
 

@@ -1,8 +1,6 @@
 const socketIo = require("socket.io");
 const socketCookieParser = require('socket.io-cookie-parser');
 const SocketSubScription = require('../subscriptions/socket.class');
-const Player = require("./player.class")
-const Room = require('./room.class')
 
 const { ORIGIN } = require("../config")
 const _sockets = {};

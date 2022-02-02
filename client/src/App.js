@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux'
 import {
 	Routes,
 	Route,
-	useNavigate,
-	HashRouter
+	useNavigate
 } from "react-router-dom";
 
 import Sockets from './services/Sockets';
@@ -20,10 +19,12 @@ function App() {
 	const navigate = useNavigate()
 
 	React.useEffect(() => {
+		if (room)
+		console.log(room.name)
 		if (!auth)
 			navigate("/");
 		else if (room)
-			navigate(`${room.name}[${auth}]`)
+			navigate(`${room.name}[${auth.name}]`)
 		else
 			navigate("/rooms")
 	}, [auth, room])

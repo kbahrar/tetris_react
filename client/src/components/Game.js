@@ -6,6 +6,14 @@ import Controls from './GAME/Controls'
 import MessagePopup from './GAME/MessagePopup'
 
 export default function Game() {
+    React.useEffect(() => {
+        console.log('hi')
+        
+        return () => {
+            console.log('bey')
+        };
+    }, []);
+    
     return (
         <>
             <GridBoard />

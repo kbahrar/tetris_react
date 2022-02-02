@@ -1,6 +1,6 @@
 import { ROOMS } from "../actions";
 
-const roomsReducer = (state = null, action) => {
+const roomsReducer = (state = [], action) => {
     switch (action.type) {
         case ROOMS:
             return action.payload

@@ -21,8 +21,13 @@ class Player {
     static getPlayer (name) {
         return _players[name]
     }
-    static createRoom (roomName, playerName) {
-        this.room = new Room(roomName, _players[playerName])
+
+    createRoom (roomName) {
+        if (!this.room) {
+            this.room = new Room(roomName, this)
+            return this.room
+        }
+        return false
     }
 }
 

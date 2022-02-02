@@ -2,46 +2,21 @@ import React from "react";
 import { useState } from "react";
 import { joinRoom } from "../../actions";
 import { useSelector, useDispatch } from 'react-redux'
+import Error from "../UTILS/Error";
 
 export default function Room(props) {
-    const [rooms, setRooms] = useState([])
-    const [room, setRoom] = useState("")
-    const [error, setError] = useState(["none", ""]);
-    const dispatch = useDispatch()
-    const socket = useSelector(state => state.socket)
-    const auth = useSelector(state => state.auth)
+    const rooms = useSelector(state => state.rooms);
+    const [room, setRoom] = useState("");
+    const socket = useSelector(state => state.socket);
 
     React.useEffect(() => {
         if (socket) {
             socket.emit("list room")
-
-            socket.on("list room", data => {
-                setRooms(data)
-            })
-
-            return () => {
-                socket.off("list room")
-            }
         }
     }, [socket])
 
     const changeRoomName = (e) => {
         setRoom(e.target.value)
-        setError(["none", ""])
-    }
-
-    const checkCreateRoom = (res) => {
-        if (res.status == "ok") {
-            dispatch(joinRoom({
-                host: true,
-                user: auth,
-                name: room,
-                players: [auth]
-            }))
-        }
-        else {
-            setError(["block", "room name already exist !"])
-        }
     }
 
     const createRoom = (e) => {
@@ -49,7 +24,7 @@ export default function Room(props) {
             e.preventDefault()
         else {
             setRoom("")
-            socket.emit("create room", [room, auth], checkCreateRoom)
+            socket.emit("create room", room)
         }
     }
 
@@ -71,7 +46,6 @@ export default function Room(props) {
                     </div>
                 ))}
             </div>
-            <div display={error[0]} className="error-span">{error[1]}</div>
             <div className="form-room">
                 <input
                     type="text"
@@ -84,6 +58,7 @@ export default function Room(props) {
                     CREATE ROOM
                 </div>
             </div>
+            <Error />
         </div>
     )
 }

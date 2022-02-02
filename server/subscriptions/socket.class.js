@@ -1,5 +1,6 @@
 const Player = require('../classes/player.class');
 const Room = require('../classes/room.class')
+const RoomSubscription = require('../subscriptions/room.class')
 
 module.exports = class SocketSubscription {
     constructor(master, socket) {
@@ -18,6 +19,7 @@ module.exports = class SocketSubscription {
     handleEvents() {
         this.socket.on("list room", this.listRoom.bind(this));
         this.socket.on("users", this.GetUsers.bind(this));
+        this.socket.on("create room", this.CreateRoom.bind(this));
     }
 
     listRoom() {
@@ -28,6 +30,19 @@ module.exports = class SocketSubscription {
     GetUsers() {
         var users = Player.getPlayersNames();
         this.io.emit("users", users);
+    }
+
+    CreateRoom (name) {
+        try {
+            const room = RoomSubscription.create.call(this, name);
+            if (room) {
+                this.socket.join(room.name);
+                this.socket.emit('room joined', room)
+            }
+        }
+        catch (error) {
+            this.handleError(error);
+        }
     }
 
     handleError(error) {

@@ -5,7 +5,8 @@ import {
     setRooms,
     setError,
     removeError,
-    setUsers
+    setUsers,
+    joinRoom
 } from "../actions"
 
 function Sockets(props) {
@@ -22,6 +23,10 @@ function Sockets(props) {
 
             socket.on("list room", (rooms) => {
                 dispatch(setRooms(rooms))
+            })
+
+            socket.on("room joined", (room) => {
+                dispatch(joinRoom(room))
             })
 
             socket.on("error", (msg) => {
