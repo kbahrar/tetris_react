@@ -1,6 +1,7 @@
 const Player = require('../classes/player.class');
 const Room = require('../classes/room.class')
-const RoomSubscription = require('../subscriptions/room.class')
+const RoomSubscription = require('../subscriptions/room.class');
+const GameSubscription = require('./game.class');
 
 module.exports = class SocketSubscription {
     constructor(master, socket) {
@@ -24,6 +25,20 @@ module.exports = class SocketSubscription {
         this.socket.on("join room", this.JoinRoom.bind(this));
         this.socket.on('msg room', this.sendMessagesRoom.bind(this));
         this.socket.on('msg game', this.sendMsgGame.bind(this));
+    }
+
+    startGame() {
+        try {
+            if (GameSubscription.start.call(this, this.listener.bind(this))) {
+                const room = this.player.room
+                this.io.to(room.name).emit('game started')
+                // const info = GameSubscription.getInfo.call(this, 'piece completed')
+                // if (info)
+                //     this.io.to(room.name).emit('piece completed', info)
+            }
+        } catch (error) {
+            this.handleError(error)
+        }
     }
 
     sendMsgGame (msg) {
@@ -89,6 +104,19 @@ module.exports = class SocketSubscription {
         }
         catch (error) {
             this.handleError(error);
+        }
+    }
+
+    listener(event, player) {
+        try {
+            if (player && player.room) {
+                const room = player.room
+                const info = GameSubscription.getInfo.call({ player }, event)
+                if (info)
+                    this.io.to(room.name).emit(event, info)
+            }
+        } catch (error) {
+            this.handleError(error)
         }
     }
 

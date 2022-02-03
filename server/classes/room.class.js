@@ -1,4 +1,6 @@
+const Game = require("./game.class")
 const _Rooms = {}
+
 class Room {
     constructor (name, player) {
         if (!player) throw new Error('incorrect player')
@@ -35,6 +37,16 @@ class Room {
         if (!this.players[player.name]) {
             this.players[player.name] = player
             return true
+        }
+        return false
+    }
+
+    startGame(player) {
+        if (this.hosted.name === player.name) {
+            if (!this.game) {
+                this.game = new Game(this)
+            }
+            return this.game.start()
         }
         return false
     }
