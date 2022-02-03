@@ -68,11 +68,19 @@ export const connectSocket = (socket) => {
 // room
 export const ROOM = "ROOM"
 export const EXIT_ROOM = "EXIT_ROOM"
+export const MSGROOM = "MSGROOM"
 
 export const joinRoom = (room) => {
     return {
         type: ROOM,
         payload: room
+    }
+}
+
+export const setMsgRoom = (msg) => {
+    return {
+        type: MSGROOM,
+        payload: msg
     }
 }
 

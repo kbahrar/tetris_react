@@ -21,6 +21,21 @@ module.exports = class SocketSubscription {
         this.socket.on("users", this.GetUsers.bind(this));
         this.socket.on("create room", this.CreateRoom.bind(this));
         this.socket.on("join room", this.JoinRoom.bind(this));
+        this.socket.on('msg room', this.sendMessagesRoom.bind(this))
+    }
+
+    sendMessagesRoom(msg) {
+        if (this.player && this.player.room) {
+            const msgObj = {
+                sender: this.player.name,
+                msg: msg
+            }
+            this.player.room.messages.push(msgObj)
+            this.io.to(this.player.room.name).emit('msg room', msgObj);
+        }
+        else {
+            this.handleError(new Error('invalid player or room'))
+        }
     }
 
     listRoom() {
@@ -39,6 +54,7 @@ module.exports = class SocketSubscription {
             if (room) {
                 this.socket.join(room.name);
                 this.socket.emit('room joined', room)
+                this.sendMessagesRoom('Created the Room !')
             }
         }
         catch (error) {
@@ -53,6 +69,7 @@ module.exports = class SocketSubscription {
             if (room) {
                 this.socket.join(room.name);
                 this.socket.emit('room joined', room)
+                this.sendMessagesRoom('Joined the Room !')
             }
         }
         catch (error) {

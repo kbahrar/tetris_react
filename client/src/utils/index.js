@@ -26,7 +26,7 @@ export const defaultState = () => {
 		x: 5,
 		y: -2,
 		nextShape: randomShape(),
-		isRunning: true,
+		isRunning: false,
 		score: 0,
 		speed: 1000,
 		gameOver: false

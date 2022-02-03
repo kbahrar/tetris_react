@@ -6,7 +6,6 @@ class Player {
         if (Player.getPlayer(name))
             throw new Error("username already exist");
         this.name = name
-        this.room = null
         _players[this.name] = this
     }
 

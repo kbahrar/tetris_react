@@ -179,6 +179,7 @@ code {
   grid-area: b;
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 .control-button {
@@ -344,6 +345,7 @@ input, textarea {
   border-radius: 10px;
   display: flex;
   /* justify-content: space-between; */
+  height: 90%;
   flex-direction: column;
 }
 

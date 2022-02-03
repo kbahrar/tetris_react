@@ -6,7 +6,8 @@ import {
     setError,
     removeError,
     setUsers,
-    joinRoom
+    joinRoom,
+    setMsgRoom
 } from "../actions"
 
 function Sockets(props) {
@@ -35,6 +36,10 @@ function Sockets(props) {
 
             socket.on("users", (users) => {
                 dispatch(setUsers(users))
+            })
+
+            socket.on('msg room', (msg) => {
+                dispatch(setMsgRoom(msg))
             })
         }
     }, [socket]);

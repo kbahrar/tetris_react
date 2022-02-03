@@ -5,15 +5,27 @@ import { pause, restart, resume } from "../../actions"
 export default function ScoreBoard(props) {
     const dispatch = useDispatch()
     const game = useSelector((state) => state.game)
+    const room = useSelector(state => state.room)
+    const socket = useSelector(state => state.socket)
+    const [msg, setMsg] = React.useState('')
     const { score, isRunning, gameOver } = game
 
-    const togglePlay = (event) => {
+    const togglePlay = () => {
         if (gameOver) { return }
         if (isRunning) {
             dispatch(pause())
         } else {
             dispatch(resume())
         }
+    }
+
+    const typeMsg = (e) => {
+        setMsg(e.target.value)
+    }
+
+    const sendMsg = (msg) => {
+        socket.emit('msg room', msg)
+        setMsg('')
     }
 
     return (
@@ -30,6 +42,32 @@ export default function ScoreBoard(props) {
                     Restart
                 </button>
             </div>
-        </div >
+            <div className="chat">
+            <div className="header-online">
+                chat
+            </div>
+            <div className="chat-group">
+                {room?.messages.map((item, index) => (
+                    <div className="message" key={index}>
+                        <span className="message-sender">
+                            {item.sender}
+                        </span> : {item.msg}
+                    </div>
+                ))}
+            </div>
+            <div className="form-room">
+                <input
+                    type="text"
+                    className="input-room"
+                    placeholder="type message ..."
+                    onChange={typeMsg}
+                    value={msg}
+                />
+                <div className="button-room" onClick={() => sendMsg(msg)}>
+                    SEND
+                </div>
+            </div>
+        </div>
+        </div>
     )
 }
