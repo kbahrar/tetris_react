@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux'
 
 export default function Chat(props) {
-    const [chat, setChat] = useState([]);
     const [msg, setMsg] = useState("");
     const socket = useSelector(state => state.socket);
-    const auth = useSelector(state => state.auth);
+    const messages = useSelector(state => state.messages);
 
     const typeMsg = (e) => {
         setMsg(e.target.value)
@@ -16,24 +15,10 @@ export default function Chat(props) {
         if (!msg)
             e.preventDefault()
         else {
-            socket.emit("chat", [auth, msg])
+            socket.emit("msg game", msg)
             setMsg("")
         }
     }
-
-    useEffect(() => {
-        if (socket) {
-            socket.on("chat", (data) => {
-                let msg = chat;
-                msg[msg.length] = data;
-                setChat([...msg])
-            })
-
-            return () => {
-                socket.off("chat")
-            }
-        }
-    }, [socket])
 
     return (
         <div className="chat">
@@ -41,7 +26,7 @@ export default function Chat(props) {
                 chat
             </div>
             <div className="chat-group">
-                {chat.map((item, index) => (
+                {messages.map((item, index) => (
                     <div className="message" key={index}>
                         <span className="message-sender">
                             {item.sender}

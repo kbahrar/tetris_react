@@ -31,8 +31,7 @@ class Room {
 
     add(player) {
         if (!player) throw new Error('incorrect player')
-        if (this.isLocked)
-            throw new Error("can't join this room")
+        if (this.isLocked) throw new Error("can't join this room")
         if (!this.players[player.name]) {
             this.players[player.name] = player
             return true

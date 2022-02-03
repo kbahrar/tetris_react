@@ -10,6 +10,7 @@ module.exports = class SocketSubscription {
             this.socket = socket
             this.player = new Player(this.socket.username)
             this.socket.emit('connected', this.player)
+            this.sendMsgGame('Connected !')
             this.handleEvents()
         } catch (error) {
             this.handleError(error)
@@ -21,7 +22,21 @@ module.exports = class SocketSubscription {
         this.socket.on("users", this.GetUsers.bind(this));
         this.socket.on("create room", this.CreateRoom.bind(this));
         this.socket.on("join room", this.JoinRoom.bind(this));
-        this.socket.on('msg room', this.sendMessagesRoom.bind(this))
+        this.socket.on('msg room', this.sendMessagesRoom.bind(this));
+        this.socket.on('msg game', this.sendMsgGame.bind(this));
+    }
+
+    sendMsgGame (msg) {
+        if (this.player) {
+            const msgObj = {
+                sender: this.player.name,
+                msg: msg
+            }
+            this.io.emit('msg game', msgObj)
+        }
+        else {
+            this.handleError(new Error('invalid player'))
+        }
     }
 
     sendMessagesRoom(msg) {

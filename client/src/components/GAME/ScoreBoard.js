@@ -42,7 +42,7 @@ export default function ScoreBoard(props) {
                     Restart
                 </button>
             </div>
-            <div className="chat">
+            <div className="chat-room">
             <div className="header-online">
                 chat
             </div>

@@ -345,6 +345,16 @@ input, textarea {
   border-radius: 10px;
   display: flex;
   /* justify-content: space-between; */
+  /* height: 90%; */
+  flex-direction: column;
+}
+
+.chat-room {
+  grid-area: r;
+  background-color: #99d6e3;
+  border-radius: 10px;
+  display: flex;
+  /* justify-content: space-between; */
   height: 90%;
   flex-direction: column;
 }

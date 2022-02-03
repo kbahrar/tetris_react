@@ -118,3 +118,13 @@ export const setUsers = (users) => {
         payload: users
     }
 }
+
+// messages
+export const MSGS = "MSGS"
+
+export const setMsgs = (msg) => {
+    return {
+        type: MSGS,
+        payload: msg
+    }
+}
