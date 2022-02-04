@@ -8,7 +8,8 @@ import {
     setUsers,
     joinRoom,
     setMsgRoom,
-    setMsgs
+    setMsgs,
+    updateData
 } from "../actions"
 
 function Sockets(props) {
@@ -45,6 +46,10 @@ function Sockets(props) {
 
             socket.on('msg game', (msg) => {
                 dispatch(setMsgs(msg))
+            })
+
+            socket.on('game started', (data) => {
+                dispatch(updateData(data))
             })
         }
     }, [socket]);

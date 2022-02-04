@@ -10,7 +10,6 @@ module.exports = class RoomSubscription {
     static join(name) {
         if (this.player && this.player.joinRoom(name)) {
             const room = this.player.room
-            console.log(room.info)
             return room.info
         }
         return false

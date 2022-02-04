@@ -4,6 +4,6 @@ module.exports = class GameSubscription {
             const room = this.player.room
             return room.startGame(this.player)
         } else
-            throw new CustomError('you need to join room first')
+            throw new Error('you need to join room first')
     }
 }

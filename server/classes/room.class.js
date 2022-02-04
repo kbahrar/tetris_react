@@ -42,7 +42,7 @@ class Room {
     }
 
     startGame(player) {
-        if (this.hosted.name === player.name) {
+        if (this.host.name === player.name) {
             if (!this.game) {
                 this.game = new Game(this)
             }

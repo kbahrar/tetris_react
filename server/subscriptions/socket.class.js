@@ -25,16 +25,16 @@ module.exports = class SocketSubscription {
         this.socket.on("join room", this.JoinRoom.bind(this));
         this.socket.on('msg room', this.sendMessagesRoom.bind(this));
         this.socket.on('msg game', this.sendMsgGame.bind(this));
+        this.socket.on('start game', this.startGame.bind(this));
     }
 
     startGame() {
         try {
-            if (GameSubscription.start.call(this, this.listener.bind(this))) {
+            if (GameSubscription.start.call(this)) {     
                 const room = this.player.room
-                this.io.to(room.name).emit('game started')
-                // const info = GameSubscription.getInfo.call(this, 'piece completed')
-                // if (info)
-                //     this.io.to(room.name).emit('piece completed', info)
+                console.log(this.player.name)
+                console.log(room.game.engines[this.player.name].info)
+                this.io.to(room.name).emit('game started', room.game.engines[this.player.name].info)
             }
         } catch (error) {
             this.handleError(error)

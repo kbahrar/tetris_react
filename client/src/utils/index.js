@@ -21,11 +21,11 @@ export const randomShape = () => {
 export const defaultState = () => {
 	return {
 		grid: gridDefault(),
-		shape: randomShape(),
+		shape: 0,
 		rotation: 0,
 		x: 5,
 		y: -2,
-		nextShape: randomShape(),
+		nextShape: 0,
 		isRunning: false,
 		score: 0,
 		speed: 1000,

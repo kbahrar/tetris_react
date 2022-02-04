@@ -7,6 +7,7 @@ export const ROTATE     = "ROTATE"
 export const MOVE_DOWN  = "MOVE_DOWN"
 export const DROP       = "DROP" 
 export const RESTART    = "RESTART"
+export const UPDATE     = "UPDATE"
 
 export const moveLeft = () => {
     return {type: MOVE_LEFT}
@@ -38,6 +39,13 @@ export const restart = () => {
 
 export const drop = () => {
     return { type: DROP }
+}
+
+export const updateData = (data) => {
+    return {
+        type: UPDATE,
+        payload: data
+    }
 }
 
 // AUTH actions

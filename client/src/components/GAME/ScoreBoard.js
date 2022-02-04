@@ -7,6 +7,7 @@ export default function ScoreBoard(props) {
     const game = useSelector((state) => state.game)
     const room = useSelector(state => state.room)
     const socket = useSelector(state => state.socket)
+    const auth = useSelector(state => state.auth)
     const [msg, setMsg] = React.useState('')
     const { score, isRunning, gameOver } = game
 
@@ -15,6 +16,7 @@ export default function ScoreBoard(props) {
         if (isRunning) {
             dispatch(pause())
         } else {
+            socket.emit('start game')
             dispatch(resume())
         }
     }
@@ -32,16 +34,20 @@ export default function ScoreBoard(props) {
         <div className="score-board">
             <div className="info-dev">Score: {score}</div>
             <div className="info-dev">Level: 1</div>
-            <div className="controls">
-                <button className="control-button" onClick={togglePlay}>
-                    {isRunning ? 'Pause' : 'Play'}
-                </button>
-                <button className="control-button" onClick={(e) => {
-                    dispatch(restart())
-                }}>
-                    Restart
-                </button>
-            </div>
+            {auth?.name === room?.host ?
+                <div className="controls">
+                    <button className="control-button" onClick={togglePlay}>
+                        {isRunning ? 'Pause' : 'Play'}
+                    </button>
+                    <button className="control-button" onClick={(e) => {
+                        dispatch(restart())
+                    }}>
+                        Restart
+                    </button>
+                </div>
+                :
+                <></>
+            }
             <div className="chat-room">
             <div className="header-online">
                 chat

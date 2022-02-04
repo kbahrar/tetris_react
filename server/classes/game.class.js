@@ -20,7 +20,6 @@ class Game {
     generate () {
         for (let i = 0; i < 50; i++)
             this.pieces.push(randomShape())
-        console.log(this.pieces)
     }
 
     start() {

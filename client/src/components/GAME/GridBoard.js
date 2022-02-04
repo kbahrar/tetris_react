@@ -36,28 +36,29 @@ export default function GridBoard(props) {
 		})
 	})
 
-	const update = (time) => {
-		requestRef.current = requestAnimationFrame(update)
-		if (!isRunning) {
-			return
-		}
-		if (!lastUpdateTimeRef.current) {
-			lastUpdateTimeRef.current = time
-		}
+	// const update = (time) => {
+	// 	requestRef.current = requestAnimationFrame(update)
+	// 	if (!isRunning) {
+	// 		return
+	// 	}
+	// 	if (!lastUpdateTimeRef.current) {
+	// 		lastUpdateTimeRef.current = time
+	// 	}
 
-		const deltaTime = time - lastUpdateTimeRef.current
-		progressTimeRef.current += deltaTime
-		if (progressTimeRef.current > speed) {
-			dispatch(moveDown())
-			progressTimeRef.current = 0
-		}
-		lastUpdateTimeRef.current = time
-	}
+	// 	const deltaTime = time - lastUpdateTimeRef.current
+	// 	progressTimeRef.current += deltaTime
+	// 	if (progressTimeRef.current > speed) {
+	// 		dispatch(moveDown())
+	// 		progressTimeRef.current = 0
+	// 	}
+	// 	lastUpdateTimeRef.current = time
+	// }
 
-	useEffect(() => {
-		requestRef.current = requestAnimationFrame(update)
-		return () => cancelAnimationFrame(requestRef.current)
-	}, [isRunning])
+	// useEffect(() => {
+	// 	if (isRunning)
+	// 		requestRef.current = requestAnimationFrame(update)
+	// 	return () => cancelAnimationFrame(requestRef.current)
+	// }, [isRunning])
 
 	return (
 		<div className='grid-board'>
