@@ -1,4 +1,4 @@
-const { PLAYGROUND_HEIGHT, PLAYGROUND_WIDTH } = require('../config')
+const { PLAYGROUND_HEIGHT, PLAYGROUND_WIDTH, MOVE_DOWN } = require('../config')
 
 class Engine {
     constructor(game, player) {
@@ -33,6 +33,31 @@ class Engine {
     createField() {
         const field = Array.from({ length: PLAYGROUND_HEIGHT }, () => Array(PLAYGROUND_WIDTH).fill(0))
         return field
+    }
+
+    start() {
+        if (!this.interval) {
+            this.interval = setInterval(
+                () => this.movePiece(MOVE_DOWN),
+                1000
+            )
+        }
+        return !!this.interval
+    }
+
+    movePiece (key) {
+        let listener = this.game?.room?.listener
+        console.log(listener)
+        switch (key) {
+            case MOVE_DOWN:
+                this.points[1] += 1
+                if (listener)
+                    listener("piece moved", this.player)
+                break;
+        
+            default:
+                break;
+        }
     }
 }
 

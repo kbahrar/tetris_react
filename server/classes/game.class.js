@@ -28,9 +28,7 @@ class Game {
         else {
             for (const player of Object.values(this.room.players)) {
                 this.engines[player.name] = new Engine(this, player)
-                // this.engines[player.name].start()
-                // if (typeof this.room.listener === 'function')
-                //     this.room.listener('piece completed', this.engines[player.name].player)
+                this.engines[player.name].start()
             }
             this.isStarted = true
         }

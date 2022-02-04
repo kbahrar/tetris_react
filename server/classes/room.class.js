@@ -41,10 +41,12 @@ class Room {
         return false
     }
 
-    startGame(player) {
+    startGame(player, listener) {
         if (this.host.name === player.name) {
             if (!this.game) {
                 this.game = new Game(this)
+                console.log(listener)
+                this.listener = listener
             }
             return this.game.start()
         }

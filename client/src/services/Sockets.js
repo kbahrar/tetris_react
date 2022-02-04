@@ -51,6 +51,10 @@ function Sockets(props) {
             socket.on('game started', (data) => {
                 dispatch(updateData(data))
             })
+
+            socket.on('piece moved', (data) => {
+                dispatch(updateData(data))
+            })
         }
     }, [socket]);
     

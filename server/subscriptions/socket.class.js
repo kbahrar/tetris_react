@@ -30,11 +30,9 @@ module.exports = class SocketSubscription {
 
     startGame() {
         try {
-            if (GameSubscription.start.call(this)) {     
+            if (GameSubscription.start.call(this, this.listener.bind(this))) {     
                 const room = this.player.room
-                console.log(this.player.name)
-                console.log(room.game.engines[this.player.name].info)
-                this.io.to(room.name).emit('game started', room.game.engines[this.player.name].info)
+                this.io.to(room.name).emit('game started', GameSubscription.getInfo.call(this))
             }
         } catch (error) {
             this.handleError(error)
@@ -111,7 +109,7 @@ module.exports = class SocketSubscription {
         try {
             if (player && player.room) {
                 const room = player.room
-                const info = GameSubscription.getInfo.call({ player }, event)
+                const info = GameSubscription.getInfo.call({ player })
                 if (info)
                     this.io.to(room.name).emit(event, info)
             }
