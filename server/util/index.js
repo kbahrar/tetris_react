@@ -12,6 +12,56 @@ const nextRotation = (shape, rotation) => {
 	return (rotation + 1) % shapes[shape].length
 }
 
+// moves checker
+const canMoveTo = (shape, grid, x, y, rotation) => {
+	const currentShape = shapes[shape][rotation]
+
+	for (let row = 0; row < currentShape.length; row++) {
+		for (let col = 0; col < currentShape[row].length; col++) {
+			if (currentShape[row][col] !== 0) {
+				const proposedX = col + x
+				const proposedY = row + y
+				if (proposedY < 0) {
+					continue
+				}
+
+				const possibleRow = grid[proposedY]
+				if (possibleRow) {
+					if (possibleRow[proposedX] === undefined || possibleRow[proposedX] !== 0)
+						return false
+				}
+				else {
+					return false
+				}
+			}
+		}
+	}
+	return true
+}
+
+// adds current shape to grid
+const addBlockToGrid = (shape, grid, x, y, rotation) => {
+	let blockoffGrid = false
+	const block = shapes[shape][rotation]
+	const newGrid = [...grid]
+
+	for (let row = 0; row < block.length; row++) {
+		for (let col = 0; col < block[row].length; col++) {
+			if (block[row][col]) {
+				const yIndex = row + y
+
+				if (yIndex < 0) {
+					blockoffGrid = true
+				}
+				else {
+					newGrid[row + y][col + x] = shape
+				}
+			}
+		}
+	}
+	return {grid: newGrid, gameOver: blockoffGrid}
+}
+
 const shapes = [
 	// none
 	[[[0, 0, 0, 0],
@@ -122,4 +172,4 @@ const shapes = [
 	[0, 0, 0, 0]]]
 ]
 
-module.exports = { shapes, randomShape, nextRotation}
+module.exports = { shapes, randomShape, nextRotation, canMoveTo, addBlockToGrid}

@@ -1,4 +1,14 @@
-const { PLAYGROUND_HEIGHT, PLAYGROUND_WIDTH, MOVE_DOWN } = require('../config')
+const {
+    PLAYGROUND_HEIGHT,
+    PLAYGROUND_WIDTH,
+    MOVE_DOWN
+} = require('../config')
+
+const {
+    canMoveTo,
+    addBlockToGrid,
+}
+= require("../util")
 
 class Engine {
     constructor(game, player) {
@@ -9,6 +19,7 @@ class Engine {
         this.currentPiece = 0
         this.isFailed = false
         this.isWin = false
+        this.rotation = 0
         this.score = 0
         this.piece = this.game.pieces[this.currentPiece]
         this.nextPiece = this.game.pieces[this.currentPiece + 1]
@@ -19,14 +30,14 @@ class Engine {
         return {
             grid: this.field,
             shape: this.piece,
-            rotation: 0,
+            rotation: this.rotation,
             x: this.points[0],
             y: this.points[1],
             nextShape: this.nextPiece,
             isRunning: true,
             score: 0,
             speed: 1000,
-            gameOver: false
+            gameOver: this.isFailed
         }
     }
 
@@ -39,7 +50,7 @@ class Engine {
         if (!this.interval) {
             this.interval = setInterval(
                 () => this.movePiece(MOVE_DOWN),
-                1000
+                200
             )
         }
         return !!this.interval
@@ -47,17 +58,50 @@ class Engine {
 
     movePiece (key) {
         let listener = this.game?.room?.listener
-        console.log(listener)
-        switch (key) {
-            case MOVE_DOWN:
-                this.points[1] += 1
-                if (listener)
-                    listener("piece moved", this.player)
-                break;
-        
-            default:
-                break;
+        console.log(new Date())
+        if (!this.isFailed) {
+            switch (key) {
+                case MOVE_DOWN:
+                    this.moveDown(listener)
+                    break;
+            
+                default:
+                    break;
+            }
         }
+        else {
+            this.clean()
+        }
+    }
+
+    moveDown (listener) {
+        if (canMoveTo(this.piece, this.field, this.points[0], this.points[1] + 1, this.rotation)) {
+            this.points[1] += 1
+        }
+        else {
+            let ret = addBlockToGrid(this.piece, this.field, this.points[0], this.points[1], this.rotation)
+            this.field = ret.grid
+            this.isFailed = ret.gameOver
+            this.points = [5, -2]
+            this.incrementPiece()
+        }
+        if (typeof listener === 'function')
+            listener("piece moved", this.player)
+    }
+
+    incrementPiece () {
+        this.currentPiece = this.currentPiece % 49 + 1
+        this.piece = this.game.pieces[this.currentPiece]
+        this.nextPiece = this.game.pieces[this.currentPiece + 1]
+    }
+
+    clean() {
+        if (this.interval) {
+            clearInterval(this.interval)
+            this.interval = null
+            return true
+        }
+        return false
     }
 }
 
