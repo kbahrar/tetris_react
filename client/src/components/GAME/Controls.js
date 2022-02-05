@@ -15,6 +15,7 @@ export default function Controls(props) {
     const dispatch = useDispatch()
     const isRunning = useSelector((state) => state.game.isRunning)
     const gameOver = useSelector((state) => state.game.gameOver)
+    const socket = useSelector(state => state.socket)
 
     const handleMoves = (moveFunc) => {
         if (!isRunning || gameOver) {
@@ -26,19 +27,19 @@ export default function Controls(props) {
     const handleKeyDown = (event) => {
         switch (event.keyCode) {
             case keys.UP:
-                handleMoves(rotate)
+                socket.emit('move piece', keys.UP)
                 return
             case keys.DOWN:
-                handleMoves(moveDown)
+                socket.emit('move piece', keys.DOWN)
                 return
             case keys.LEFT:
-                handleMoves(moveLeft)
+                socket.emit('move piece', keys.LEFT)
                 return
             case keys.RIGHT:
-                handleMoves(moveRight)
+                socket.emit('move piece', keys.RIGHT)
                 return
             case keys.ESPACE:
-                handleMoves(drop)
+                socket.emit('move piece', keys.ESPACE)
                 return
             default:
                 return

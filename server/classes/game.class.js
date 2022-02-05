@@ -27,6 +27,7 @@ class Game {
             throw new Error('game already started')
         else {
             for (const player of Object.values(this.room.players)) {
+                console.log(player.name)
                 this.engines[player.name] = new Engine(this, player)
                 this.engines[player.name].start()
             }

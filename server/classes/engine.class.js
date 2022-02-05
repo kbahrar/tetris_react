@@ -1,12 +1,17 @@
 const {
     PLAYGROUND_HEIGHT,
     PLAYGROUND_WIDTH,
-    MOVE_DOWN
+    MOVE_DOWN,
+    MOVE_DEEP_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    MOVE_UP
 } = require('../config')
 
 const {
     canMoveTo,
     addBlockToGrid,
+    nextRotation
 }
 = require("../util")
 
@@ -50,7 +55,7 @@ class Engine {
         if (!this.interval) {
             this.interval = setInterval(
                 () => this.movePiece(MOVE_DOWN),
-                200
+                1000
             )
         }
         return !!this.interval
@@ -58,13 +63,25 @@ class Engine {
 
     movePiece (key) {
         let listener = this.game?.room?.listener
-        console.log(new Date())
+
         if (!this.isFailed) {
             switch (key) {
                 case MOVE_DOWN:
-                    this.moveDown(listener)
+                    this.moveDown()
                     break;
-            
+                
+                case MOVE_LEFT:
+                    this.moveLeft()
+                    break;
+
+                case MOVE_RIGHT:
+                    this.moveRight()
+                    break;
+
+                case MOVE_UP:
+                    this.rotate()
+                    break;
+
                 default:
                     break;
             }
@@ -72,9 +89,12 @@ class Engine {
         else {
             this.clean()
         }
+
+        if (typeof listener === 'function')
+            listener("piece moved", this.player)
     }
 
-    moveDown (listener) {
+    moveDown () {
         if (canMoveTo(this.piece, this.field, this.points[0], this.points[1] + 1, this.rotation)) {
             this.points[1] += 1
         }
@@ -85,8 +105,24 @@ class Engine {
             this.points = [5, -2]
             this.incrementPiece()
         }
-        if (typeof listener === 'function')
-            listener("piece moved", this.player)
+    }
+
+    moveLeft () {
+        if (canMoveTo(this.piece, this.field, this.points[0] - 1, this.points[1], this.rotation)) {
+            this.points[0] -= 1
+        }
+    }
+
+    moveRight () {
+        if (canMoveTo(this.piece, this.field, this.points[0] + 1, this.points[1], this.rotation)) {
+            this.points[0] += 1
+        }
+    }
+
+    rotate () {
+        const newRotate = nextRotation(this.piece, this.rotation);
+        if (canMoveTo(this.piece, this.field, this.points[0], this.points[1], newRotate))
+            this.rotation = newRotate
     }
 
     incrementPiece () {

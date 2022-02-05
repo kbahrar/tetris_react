@@ -16,7 +16,7 @@ const nextRotation = (shape, rotation) => {
 const canMoveTo = (shape, grid, x, y, rotation) => {
 	const currentShape = shapes[shape][rotation]
 
-	for (let row = 0; row < currentShape.length; row++) {
+	for (let row = 0; row < currentShape?.length; row++) {
 		for (let col = 0; col < currentShape[row].length; col++) {
 			if (currentShape[row][col] !== 0) {
 				const proposedX = col + x

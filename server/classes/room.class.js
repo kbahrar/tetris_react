@@ -52,6 +52,14 @@ class Room {
         }
         return false
     }
+
+    movePiece (player, key) {
+        if (this.game) {
+            this.game.engines[player.name].movePiece(key)
+        }
+        else
+            throw new Error('no game started !')
+    }
 }
 
 module.exports = Room;

@@ -14,6 +14,7 @@ import {
 
 function Sockets(props) {
     const socket = useSelector((state) => state.socket);
+    const auth = useSelector((state) => state.auth);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -52,11 +53,12 @@ function Sockets(props) {
                 dispatch(updateData(data))
             })
 
-            socket.on('piece moved', (data) => {
-                dispatch(updateData(data))
+            socket.on('piece moved', (data, player) => {
+                if (auth?.name === player)
+                    dispatch(updateData(data))
             })
         }
-    }, [socket]);
+    }, [socket, auth]);
     
 
     return props.children;

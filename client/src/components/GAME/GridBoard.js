@@ -23,7 +23,7 @@ export default function GridBoard(props) {
 			const blockY = row - y
 			let color = square
 
-			if (blockX >= 0 && blockX < block.length && blockY >= 0 && blockY < block.length) {
+			if (blockX >= 0 && blockX < block?.length && blockY >= 0 && blockY < block?.length) {
 				color = block[blockY][blockX] === 0 ? color : blockColor
 			}
 
