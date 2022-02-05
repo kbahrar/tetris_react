@@ -126,9 +126,9 @@ class Engine {
     }
 
     incrementPiece () {
-        this.currentPiece = this.currentPiece % 49 + 1
+        this.currentPiece = (this.currentPiece + 1) % 49
         this.piece = this.game.pieces[this.currentPiece]
-        this.nextPiece = this.game.pieces[this.currentPiece + 1]
+        this.nextPiece = this.game.pieces[this.currentPiece === 49 ? 0 : this.currentPiece + 1]
     }
 
     clean() {

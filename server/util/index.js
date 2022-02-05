@@ -16,7 +16,9 @@ const nextRotation = (shape, rotation) => {
 const canMoveTo = (shape, grid, x, y, rotation) => {
 	const currentShape = shapes[shape][rotation]
 
-	for (let row = 0; row < currentShape?.length; row++) {
+	if (!currentShape)
+		return false
+	for (let row = 0; row < currentShape.length; row++) {
 		for (let col = 0; col < currentShape[row].length; col++) {
 			if (currentShape[row][col] !== 0) {
 				const proposedX = col + x
@@ -45,6 +47,8 @@ const addBlockToGrid = (shape, grid, x, y, rotation) => {
 	const block = shapes[shape][rotation]
 	const newGrid = [...grid]
 
+	if (!block)
+		return {grid, gameOver: false}
 	for (let row = 0; row < block.length; row++) {
 		for (let col = 0; col < block[row].length; col++) {
 			if (block[row][col]) {
