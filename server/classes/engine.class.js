@@ -30,6 +30,7 @@ class Engine {
         this.nextPiece = this.game.pieces[this.currentPiece + 1]
         this.points = [5, -2]
         this.speed = 1000
+        this.linesFull = 0
     }
 
     get info() {
@@ -136,15 +137,26 @@ class Engine {
         const points = [0, 40, 100, 300, 1200]
         let completedRows = 0
     
-        for (let row = 0; row < this.field.length; row++) {
-            if (this.field[row].indexOf(0) === -1) {
+        for (let row = 0; row < this.field.length - this.linesFull; row++) {
+            if (this.field[row]?.indexOf(0) === -1) {
                 completedRows++
                 this.field.splice(row, 1)
                 this.field.unshift(Array(10).fill(0))
             }
         }
-    
+        
+        if (completedRows > 0)
+            this.game.addLines(this.player.name, completedRows)
+
         return points[completedRows]
+    }
+
+    addConstLines (numLines) {
+        for (let i = 0; i < numLines; i++) {
+            this.field.splice(0, 1)
+            this.field[this.field.length] = new Array(PLAYGROUND_WIDTH).fill(9)
+        }
+        this.linesFull += numLines
     }
 
     clean() {
