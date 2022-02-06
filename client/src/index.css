@@ -15,6 +15,14 @@
   --color-6: #1f91ca;
   --color-7: #c22828;
   --color-9: #3f4344;
+  
+  --color-1-shadow: #d47434a4;
+  --color-2-shadow: #d4ba2562;
+  --color-3-shadow: #1919d82d;
+  --color-4-shadow: #ac17d13d;
+  --color-5-shadow: #1ecf1e48;
+  --color-6-shadow: #1f91ca46;
+  --color-7-shadow: #c228283f;
 
   --button-color-t: rgba(200, 200, 200, 1);
   --button-color-r: rgba(150, 150, 150, 1);
@@ -95,6 +103,39 @@ code {
 
 .color-7 {
   background-color: var(--color-7);
+}
+
+.color-9 {
+  background-color: var(--color-9);
+}
+
+/* colors shadows */
+.color-1-shadow{
+  background-color: var(--color-1-shadow);
+}
+
+.color-2-shadow {
+  background-color: var(--color-2-shadow);
+}
+
+.color-3-shadow {
+  background-color: var(--color-3-shadow);
+}
+
+.color-4-shadow {
+  background-color: var(--color-4-shadow);
+}
+
+.color-5-shadow {
+  background-color: var(--color-5-shadow);
+}
+
+.color-6-shadow {
+  background-color: var(--color-6-shadow);
+}
+
+.color-7-shadow {
+  background-color: var(--color-7-shadow);
 }
 
 /* Grid Square */

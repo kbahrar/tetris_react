@@ -29,7 +29,8 @@ export const defaultState = () => {
 		isRunning: false,
 		score: 0,
 		speed: 1000,
-		gameOver: false
+		gameOver: false,
+		yShadow: -2
 	}
 }
 

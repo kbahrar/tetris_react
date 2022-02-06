@@ -31,6 +31,7 @@ class Engine {
         this.points = [5, -2]
         this.speed = 1000
         this.linesFull = 0
+        this.yShadow = -2
     }
 
     get info() {
@@ -40,6 +41,7 @@ class Engine {
             rotation: this.rotation,
             x: this.points[0],
             y: this.points[1],
+            yShadow: this.yShadow,
             nextShape: this.nextPiece,
             isRunning: true,
             score: this.score,
@@ -90,6 +92,7 @@ class Engine {
                 default:
                     break;
             }
+            this.getShadow()
         }
         else {
             this.clean()
@@ -108,6 +111,7 @@ class Engine {
             this.field = ret.grid
             this.isFailed = ret.gameOver
             this.points = [5, -2]
+            this.yShadow = -2
             this.rotation = 0
             this.incrementPiece()
         }
@@ -118,7 +122,6 @@ class Engine {
         while (canMoveTo(this.piece, this.field, this.points[0], y++, this.rotation)) {
             this.moveDown()
         }
-        // this.moveDown()
     }
 
     moveLeft () {
@@ -161,6 +164,13 @@ class Engine {
             this.game.addLines(this.player.name, completedRows)
 
         return points[completedRows]
+    }
+
+    getShadow() {
+        let y = this.yShadow = this.points[1]
+        while (canMoveTo(this.piece, this.field, this.points[0], y++, this.rotation)) {
+            this.yShadow++
+        }
     }
 
     addConstLines (numLines) {

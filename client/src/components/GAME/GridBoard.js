@@ -1,30 +1,31 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import GridSquare from "./GridSquare";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { shapes } from "../../utils";
-import { moveDown } from "../../actions";
 
 export default function GridBoard(props) {
-	const requestRef = useRef()
-	const lastUpdateTimeRef = useRef(0)
-	const progressTimeRef = useRef(0)
-	const dispatch = useDispatch()
 	const game = useSelector((state) => state.game)
-	const { grid, shape, rotation, x, y, isRunning, speed } = game
+	const { grid, shape, rotation, x, y, yShadow } = game
 
 	const block = shapes[shape][rotation]
 	const blockColor = shape
-
+	console.log(yShadow)
 	const gridSquares = grid?.map((rowArray, row) => {
 
 		return rowArray?.map((square, col) => {
 
 			const blockX = col - x
 			const blockY = row - y
+			const blockYshadow = row - yShadow + 1
+			let shadow = false
 			let color = square
 
 			if (blockX >= 0 && blockX < block?.length && blockY >= 0 && blockY < block?.length) {
 				color = block[blockY][blockX] === 0 ? color : blockColor
+			}
+			else if (blockX >= 0 && blockX < block?.length && blockYshadow >= 0 && blockYshadow < block?.length) {
+				color = block[blockYshadow][blockX] === 0 ? color : blockColor
+				shadow = block[blockYshadow][blockX] === 0 ? false : true
 			}
 
 			const k = row * grid[0].length + col;
@@ -32,33 +33,10 @@ export default function GridBoard(props) {
 			return <GridSquare
 				key={k}
 				classe={color > 0 ? 'grid-square-color' : 'grid-square'}
+				shadow={shadow}
 				color={color} />
 		})
 	})
-
-	// const update = (time) => {
-	// 	requestRef.current = requestAnimationFrame(update)
-	// 	if (!isRunning) {
-	// 		return
-	// 	}
-	// 	if (!lastUpdateTimeRef.current) {
-	// 		lastUpdateTimeRef.current = time
-	// 	}
-
-	// 	const deltaTime = time - lastUpdateTimeRef.current
-	// 	progressTimeRef.current += deltaTime
-	// 	if (progressTimeRef.current > speed) {
-	// 		dispatch(moveDown())
-	// 		progressTimeRef.current = 0
-	// 	}
-	// 	lastUpdateTimeRef.current = time
-	// }
-
-	// useEffect(() => {
-	// 	if (isRunning)
-	// 		requestRef.current = requestAnimationFrame(update)
-	// 	return () => cancelAnimationFrame(requestRef.current)
-	// }, [isRunning])
 
 	return (
 		<div className='grid-board'>
