@@ -65,7 +65,7 @@ class Engine {
     movePiece (key) {
         let listener = this.game?.room?.listener
 
-        if (!this.isFailed) {
+        if (!this.isFailed || !this.isWin) {
             switch (key) {
                 case MOVE_DOWN:
                     this.moveDown()
@@ -81,6 +81,10 @@ class Engine {
 
                 case MOVE_UP:
                     this.rotate()
+                    break;
+
+                case MOVE_DEEP_DOWN:
+                    this.moveDeepDown()
                     break;
 
                 default:
@@ -107,6 +111,14 @@ class Engine {
             this.rotation = 0
             this.incrementPiece()
         }
+    }
+
+    moveDeepDown () {
+        let y = this.points[1]
+        while (canMoveTo(this.piece, this.field, this.points[0], y++, this.rotation)) {
+            this.moveDown()
+        }
+        // this.moveDown()
     }
 
     moveLeft () {
