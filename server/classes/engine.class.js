@@ -29,6 +29,7 @@ class Engine {
         this.piece = this.game.pieces[this.currentPiece]
         this.nextPiece = this.game.pieces[this.currentPiece + 1]
         this.points = [5, -2]
+        this.speed = 1000
     }
 
     get info() {
@@ -40,8 +41,7 @@ class Engine {
             y: this.points[1],
             nextShape: this.nextPiece,
             isRunning: true,
-            score: 0,
-            speed: 1000,
+            score: this.score,
             gameOver: this.isFailed
         }
     }
@@ -55,7 +55,7 @@ class Engine {
         if (!this.interval) {
             this.interval = setInterval(
                 () => this.movePiece(MOVE_DOWN),
-                1000
+                this.speed
             )
         }
         return !!this.interval
@@ -89,7 +89,7 @@ class Engine {
         else {
             this.clean()
         }
-
+        this.score += this.checkRows()
         if (typeof listener === 'function')
             listener("piece moved", this.player)
     }
@@ -103,6 +103,7 @@ class Engine {
             this.field = ret.grid
             this.isFailed = ret.gameOver
             this.points = [5, -2]
+            this.rotation = 0
             this.incrementPiece()
         }
     }
@@ -129,6 +130,21 @@ class Engine {
         this.currentPiece = (this.currentPiece + 1) % 49
         this.piece = this.game.pieces[this.currentPiece]
         this.nextPiece = this.game.pieces[this.currentPiece === 49 ? 0 : this.currentPiece + 1]
+    }
+
+    checkRows() {
+        const points = [0, 40, 100, 300, 1200]
+        let completedRows = 0
+    
+        for (let row = 0; row < this.field.length; row++) {
+            if (this.field[row].indexOf(0) === -1) {
+                completedRows++
+                this.field.splice(row, 1)
+                this.field.unshift(Array(10).fill(0))
+            }
+        }
+    
+        return points[completedRows]
     }
 
     clean() {
