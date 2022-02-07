@@ -67,7 +67,7 @@ class Engine {
     movePiece (key) {
         let listener = this.game?.room?.listener
 
-        if (!this.isFailed || !this.isWin) {
+        if (!this.isFailed || this.isWin) {
             switch (key) {
                 case MOVE_DOWN:
                     this.moveDown()

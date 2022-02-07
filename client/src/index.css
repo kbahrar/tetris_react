@@ -32,6 +32,7 @@
   --cols: 10;
   --rows: 20;
   --tile-size: 50px;
+  --tile-size-opo: 20px;
   --border-width: 5px;
 }
 
@@ -147,10 +148,29 @@ code {
   border-width: 1px;
 }
 
+.grid-square-opo {
+  border-style: solid;
+  border-color: #93999b;
+  width: var(--tile-size-opo);
+  height: var(--tile-size-opo);
+  border-width: 1px;
+}
+
 .grid-square-color {
   border-style: solid;
   width: var(--tile-size);
   height: var(--tile-size);
+  border-width: var(--border-width);
+  border-left-color: var(--border-left-color);
+  border-right-color: var(--border-right-color);
+  border-top-color: var(--border-top-color);
+  border-bottom-color: var(--border-bottom-color);
+}
+
+.grid-square-color-opo {
+  border-style: solid;
+  width: var(--tile-size-opo);
+  height: var(--tile-size-opo);
   border-width: var(--border-width);
   border-left-color: var(--border-left-color);
   border-right-color: var(--border-right-color);
@@ -165,6 +185,16 @@ code {
   grid-gap: 0;
   align-self: flex-start;
   grid-area: c;
+}
+
+/* grid Board opponent*/
+.grid-board-opponent {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile-size-opo));
+  grid-gap: 0;
+  align-self: flex-start;
+  margin-top: 50px;
+  /* grid-area: r; */
 }
 
 /* next block */

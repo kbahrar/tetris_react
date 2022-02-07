@@ -2,6 +2,7 @@ import React from "react";
 import GridSquare from "./GridSquare";
 import {useSelector} from 'react-redux'
 import { shapes } from "../../utils";
+import GridBoardOpo from "./GridBoardOpponent";
 
 export default function NextBlock(props) {
     const nextShape = useSelector((state) => state.game.nextShape)
@@ -21,6 +22,7 @@ export default function NextBlock(props) {
     return (
         <div className="next-block">
             {grid}
+            <GridBoardOpo />
         </div>
     )
 }
