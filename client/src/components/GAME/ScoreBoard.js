@@ -10,8 +10,11 @@ export default function ScoreBoard(props) {
     const auth = useSelector(state => state.auth)
     const [msg, setMsg] = React.useState('')
     const { score, isRunning, gameOver } = game
+    const play_btn = document.querySelector("#play-btn")
+    const restart_btn = document.querySelector("#restart-btn")
 
     const togglePlay = () => {
+        play_btn.blur()
         if (gameOver) { return }
         if (isRunning) {
             dispatch(pause())
@@ -36,10 +39,11 @@ export default function ScoreBoard(props) {
             <div className="info-dev">Level: 1</div>
             {auth?.name === room?.host ?
                 <div className="controls">
-                    <button className="control-button" onClick={togglePlay}>
+                    <button id="play-btn" className="control-button" onClick={togglePlay}>
                         {isRunning ? 'Pause' : 'Play'}
                     </button>
-                    <button className="control-button" onClick={(e) => {
+                    <button id="restart-btn" className="control-button" onClick={(e) => {
+                        restart_btn.blur()
                         dispatch(restart())
                     }}>
                         Restart
