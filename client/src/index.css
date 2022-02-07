@@ -193,8 +193,28 @@ code {
   grid-template-columns: repeat(var(--cols), var(--tile-size-opo));
   grid-gap: 0;
   align-self: flex-start;
+}
+
+.opponent-dev {
+  display: flex;
+  flex-direction: column;
   margin-top: 50px;
-  /* grid-area: r; */
+}
+
+.header-opponent {
+  background-color: #126E82;
+  padding: 20px;
+  border-radius: 10px 10px 0px 0px;
+  color: white;
+  font-size: large;
+  width: 200px;
+}
+
+.select-dev {
+  width: 200px;
+  height: 50px;
+  text-align: center;
+  font-size: large;
 }
 
 /* next block */

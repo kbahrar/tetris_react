@@ -2,6 +2,7 @@ import React from "react";
 import GridSquare from "./GridSquare";
 import { useSelector } from 'react-redux'
 import { shapes } from "../../utils";
+import Select from "../UTILS/Select";
 
 export default function GridBoardOpo(props) {
 	const game = useSelector((state) => state.opGame)
@@ -33,8 +34,14 @@ export default function GridBoardOpo(props) {
 	})
 
 	return (
-		<div className='grid-board-opponent'>
-			{gridSquares}
-		</div>
+        <div className="opponent-dev">
+            <div className="header-opponent">
+                Opponent
+            </div>
+            <Select />
+            <div className='grid-board-opponent'>
+                {gridSquares}
+            </div>
+        </div>
 	)
 }
