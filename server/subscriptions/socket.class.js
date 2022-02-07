@@ -97,7 +97,7 @@ module.exports = class SocketSubscription {
             console.log(room)
             if (room) {
                 this.socket.join(room.name);
-                this.socket.emit('room joined', room)
+                this.io.to(room.name).emit('room joined', room)
                 this.sendMessagesRoom('Joined the Room !')
             }
         }

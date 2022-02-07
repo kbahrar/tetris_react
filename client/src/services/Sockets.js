@@ -9,12 +9,15 @@ import {
     joinRoom,
     setMsgRoom,
     setMsgs,
-    updateData
+    updateData,
+    updateDataOp,
+    addOpponent
 } from "../actions"
 
 function Sockets(props) {
     const socket = useSelector((state) => state.socket);
     const auth = useSelector((state) => state.auth);
+    const room = useSelector((state) => state.room);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -56,11 +59,22 @@ function Sockets(props) {
             socket.on('piece moved', (data, player) => {
                 if (auth?.name === player)
                     dispatch(updateData(data))
+                else if (auth?.opponent === player)
+                    dispatch(updateDataOp(data))
             })
         }
     }, [socket, auth]);
     
-
+    useEffect(() => {
+        if (room && room?.players.length > 1 && !auth?.opponent) {
+            room.players.map((item) => {
+                if (item !== auth?.name) {
+                    dispatch(addOpponent(item))
+                }
+            })
+        }
+    }, [auth, room]);
+    
     return props.children;
 }
 

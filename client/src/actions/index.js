@@ -66,6 +66,7 @@ export const resetDataOp = () => {
 // AUTH actions
 export const AUTH_LOGIN  = "AUTH_LOGIN"
 export const LOGOUT = "LOGOUT"
+export const ADDOP = "ADDOP"
 
 export const authLogin = (username) => {
     return {
@@ -76,6 +77,13 @@ export const authLogin = (username) => {
 
 export const logout = () => {
     return {type: LOGOUT}
+}
+
+export const addOpponent = (opponent) => {
+    return {
+        type: ADDOP,
+        payload: opponent
+    }
 }
 
 //  sockets
