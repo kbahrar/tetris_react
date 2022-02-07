@@ -17,6 +17,7 @@ import {
 function Sockets(props) {
     const socket = useSelector((state) => state.socket);
     const auth = useSelector((state) => state.auth);
+    const opponent = useSelector(state => state.auth?.opponent)
     const room = useSelector((state) => state.room);
     const dispatch = useDispatch()
 
@@ -55,25 +56,35 @@ function Sockets(props) {
             socket.on('game started', (data) => {
                 dispatch(updateData(data))
             })
+        }
+    }, [socket]);
+    
+    // useEffect(() => {
+    //     if (room && room?.players.length > 1 && !auth?.opponent) {
+    //         room.players.map((item) => {
+    //             if (item !== auth?.name) {
+    //                 dispatch(addOpponent(item))
+    //             }
+    //         })
+    //     }
+    // }, [auth, room]);
 
+    useEffect(() => {
+        if (socket) {
             socket.on('piece moved', (data, player) => {
+                console.log(opponent)
                 if (auth?.name === player)
                     dispatch(updateData(data))
-                else if (auth?.opponent === player)
+                else if (opponent === player)
                     dispatch(updateDataOp(data))
             })
+
         }
-    }, [socket, auth]);
-    
-    useEffect(() => {
-        if (room && room?.players.length > 1 && !auth?.opponent) {
-            room.players.map((item) => {
-                if (item !== auth?.name) {
-                    dispatch(addOpponent(item))
-                }
-            })
+        return () => {
+            if (socket)
+                socket.off('piece moved')
         }
-    }, [auth, room]);
+    }, [socket, auth, opponent]);
     
     return props.children;
 }
