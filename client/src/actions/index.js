@@ -8,6 +8,8 @@ export const MOVE_DOWN  = "MOVE_DOWN"
 export const DROP       = "DROP" 
 export const RESTART    = "RESTART"
 export const UPDATE     = "UPDATE"
+export const UPDATEOP   = "UPDATEOP"
+export const RESETOP    = "RESETOP"
 
 export const moveLeft = () => {
     return {type: MOVE_LEFT}
@@ -45,6 +47,19 @@ export const updateData = (data) => {
     return {
         type: UPDATE,
         payload: data
+    }
+}
+
+export const updateDataOp = (data) => {
+    return {
+        type: UPDATEOP,
+        payload: data
+    }
+}
+
+export const resetDataOp = () => {
+    return {
+        type: RESETOP
     }
 }
 

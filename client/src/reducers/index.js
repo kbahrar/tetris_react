@@ -7,9 +7,11 @@ import roomsReducer from './rooms-reducer'
 import errorReducer from './error-reducer'
 import usersReducer from './users-reducer'
 import msgsReducer from './msgs-reducer'
+import opGameReducer from './opGame-reducer'
 
 const reducers = combineReducers({
     game: gameReducer,
+    opGame: opGameReducer,
     auth: authReducer,
     socket: socketReducer,
     room: roomReducer,
