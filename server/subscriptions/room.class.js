@@ -14,4 +14,15 @@ module.exports = class RoomSubscription {
         }
         return false
     }
+
+    static getInfo() {
+        if (this.player && this.player.room) {
+            return this.player.room.info
+        }
+        return null
+    }
+
+    static exit() {
+        return this.player.room.exit(this.player)
+    }
 }

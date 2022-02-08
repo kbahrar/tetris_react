@@ -56,18 +56,12 @@ function Sockets(props) {
             socket.on('game started', (data) => {
                 dispatch(updateData(data))
             })
+
+            socket.on('player exited', () => {
+                socket.emit('get room')
+            })
         }
     }, [socket]);
-    
-    // useEffect(() => {
-    //     if (room && room?.players.length > 1 && !auth?.opponent) {
-    //         room.players.map((item) => {
-    //             if (item !== auth?.name) {
-    //                 dispatch(addOpponent(item))
-    //             }
-    //         })
-    //     }
-    // }, [auth, room]);
 
     useEffect(() => {
         if (socket) {

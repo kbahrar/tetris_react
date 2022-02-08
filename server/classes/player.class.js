@@ -41,6 +41,15 @@ class Player {
         }
         throw new Error('Player already in a room');
     }
+
+    disconnect() {
+        if (this.room) {
+            this.room.exit(this)
+            delete this.room
+        }
+        delete _players[this.name]
+        return true
+    }
 }
 
 module.exports = Player;

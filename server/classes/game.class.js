@@ -42,6 +42,25 @@ class Game {
             }
         }
     }
+
+    quit() {
+        for (const player of Object.values(this.room.players)) {
+            if (this.engines[player.name]) {
+                this.engines[player.name].clean()
+                delete this.engines[player.name]
+            }
+        }
+        return delete this.room.game
+    }
+
+    removePlayer(player) {
+        if (player && this.engines[player.name]) {
+            this.engines[player.name].clean()
+            delete this.engines[player.name]
+            return true
+        }
+        return false
+    }
 }
 
 module.exports = Game;

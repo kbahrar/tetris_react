@@ -26,7 +26,10 @@ module.exports = class SocketSubscription {
         this.socket.on('msg room', this.sendMessagesRoom.bind(this));
         this.socket.on('msg game', this.sendMsgGame.bind(this));
         this.socket.on('start game', this.startGame.bind(this));
-        this.socket.on('move piece', this.MovePieces.bind(this))
+        this.socket.on('move piece', this.MovePieces.bind(this));
+        this.socket.on('exit room', this.exitRoom.bind(this));
+        this.socket.on('disconnect', this.disconnect.bind(this));
+        this.socket.on('get room', this.getRoom.bind(this))
     }
 
     startGame() {
@@ -55,6 +58,7 @@ module.exports = class SocketSubscription {
 
     sendMessagesRoom(msg) {
         if (this.player && this.player.room) {
+            console.log(this.player.name)
             const msgObj = {
                 sender: this.player.name,
                 msg: msg
@@ -94,7 +98,6 @@ module.exports = class SocketSubscription {
     JoinRoom (name) {
         try {
             const room = RoomSubscription.join.call(this, name);
-            console.log(room)
             if (room) {
                 this.socket.join(room.name);
                 this.io.to(room.name).emit('room joined', room)
@@ -106,12 +109,54 @@ module.exports = class SocketSubscription {
         }
     }
 
+    getRoom () {
+        const room = RoomSubscription.getInfo.call(this);
+        if (room)
+            this.socket.emit('room joined', room)
+    }
+
     MovePieces (key) {
         try {
             GameSubscription.move_piece.call(this, key)
         }
         catch (error) {
             this.handleError(error);
+        }
+    }
+
+    exitRoom() {
+        try {
+            if (this.player && this.player.room) {
+                const room = this.player.room
+                const name = this.player.name
+                this.sendMessagesRoom('Exited the Room !')
+                console.log('exited')
+                if (RoomSubscription.exit.call(this)) {
+                    this.socket.leave(room.name)
+                    this.socket.emit('room exited')
+                    this.io.to(room.name).emit('player exited')
+                }
+            }
+        } catch (error) {
+            this.handleError(error)
+        }
+    }
+
+    disconnect() {
+        try {
+            if (this.player) {
+                this.sendMessagesRoom('Exited the Room !')
+                const room = this.player.room
+                const name = this.player.name
+                this.player.disconnect()
+                if (room) {
+                    this.io.to(room.name).emit('player exited')
+                }
+                this.master.removeSocket(name)
+            }
+        } catch (error) {
+            console.log(error.message)
+            this.handleError(error)
         }
     }
 

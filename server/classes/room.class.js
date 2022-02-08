@@ -60,6 +60,23 @@ class Room {
         else
             throw new Error('no game started !')
     }
+
+    exit(player) {
+        if (player) {
+            const players = Object.keys(this.players)
+            if (players.length === 1 && this.game)
+                this.game.quit()
+            if (this.host.name === player.name && players.length > 1)
+                this.host = this.players[players[1]]
+            else if (this.host.name === player.name) delete _Rooms[this.name]
+            if (this.game && this.game.engines && this.game.engines[player.name])
+                this.game.removePlayer(this.game.engines[player.name].player)
+            delete this.players[player.name].room
+            delete this.players[player.name]
+            return true
+        }
+        return false
+    }
 }
 
 module.exports = Room;
