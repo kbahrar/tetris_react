@@ -45,10 +45,19 @@ class Room {
         if (this.host.name === player.name) {
             if (!this.game) {
                 this.game = new Game(this)
-                console.log(listener)
                 this.listener = listener
             }
             return this.game.start()
+        }
+        return false
+    }
+
+    restartGame(player) {
+        if (this.host.name === player.name) {
+            if (!this.game) {
+                this.game = new Game(this)
+            }
+            return this.game.restart()
         }
         return false
     }

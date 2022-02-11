@@ -31,6 +31,7 @@ class Game {
                 this.engines[player.name] = new Engine(this, player)
                 this.engines[player.name].start()
             }
+            this.canRestart = false
             this.isStarted = true
             this.winner = null
         }
@@ -47,8 +48,11 @@ class Game {
                 this.engines[player.name].restart()
                 this.winner = null
             }
+            this.canRestart = false
             this.isStarted = true
+            this.winner = null
         }
+        return this.isStarted
     }
 
     checkWinner() {

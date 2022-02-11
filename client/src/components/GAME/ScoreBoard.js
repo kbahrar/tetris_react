@@ -1,6 +1,5 @@
 import React from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { pause, restart, resume } from "../../actions"
 
 export default function ScoreBoard(props) {
     const dispatch = useDispatch()
@@ -11,12 +10,20 @@ export default function ScoreBoard(props) {
     const [msg, setMsg] = React.useState('')
     const { score, isRunning, gameOver, canRestart } = game
     const play_btn = document.querySelector("#play-btn")
+    const restart_btn = document.querySelector("#restart-btn")
 
-    const togglePlay = () => {
+    const start = () => {
         play_btn.blur()
         if (gameOver) { return }
         if (!isRunning) {
             socket.emit('start game')
+        }
+    }
+
+    const restart = () => {
+        restart_btn.blur()
+        if (canRestart) {
+            socket.emit('restart game')
         }
     }
 
@@ -35,15 +42,19 @@ export default function ScoreBoard(props) {
             <div className="info-dev">Level: 1</div>
             {auth?.name === room?.host ?
                 <div className="controls">
-                    <button id="play-btn" className="control-button" onClick={togglePlay}>
-                        {!isRunning ? 'Start' : 'Restart'}
-                    </button>
-                    {/* <button id="restart-btn" className="control-button" onClick={(e) => {
-                        restart_btn.blur()
-                        dispatch(restart())
-                    }}>
-                        Restart
-                    </button> */}
+                    {
+                        !isRunning && !canRestart ? 
+                            <button id="play-btn" className="control-button" onClick={start}>
+                                Start
+                            </button>
+                        :
+                        canRestart ?
+                        <button id="restart-btn" className="control-button" onClick={restart}>
+                            Restart
+                        </button>
+                        :
+                        <></>
+                    }
                 </div>
                 :
                 <></>

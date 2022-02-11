@@ -29,10 +29,22 @@ module.exports = class SocketSubscription {
         this.socket.on('move piece', this.MovePieces.bind(this));
         this.socket.on('exit room', this.exitRoom.bind(this));
         this.socket.on('disconnect', this.disconnect.bind(this));
-        this.socket.on('get room', this.getRoom.bind(this))
+        this.socket.on('get room', this.getRoom.bind(this));
+        this.socket.on('restart game', this.restartGame.bind(this));
     }
 
     startGame() {
+        try {
+            if (GameSubscription.start.call(this, this.listener.bind(this))) {     
+                const room = this.player.room
+                this.io.to(room.name).emit('game started', GameSubscription.getInfo.call(this))
+            }
+        } catch (error) {
+            this.handleError(error)
+        }
+    }
+
+    restartGame() {
         try {
             if (GameSubscription.start.call(this, this.listener.bind(this))) {     
                 const room = this.player.room

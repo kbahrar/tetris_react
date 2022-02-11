@@ -14,6 +14,14 @@ module.exports = class GameSubscription {
             throw new Error('you need to join room first')
     }
 
+    static restart() {
+        if (this.player && this.player.room) {
+            const room = this.player.room
+            return room.restartGame(this.player)
+        } else
+            throw new Error('you need to join room first')
+    }
+
     static move_piece(key) {
         if (this.player && this.player.room) {
             const room = this.player.room
