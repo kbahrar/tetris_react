@@ -6,10 +6,11 @@ import Select from "../UTILS/Select";
 
 export default function GridBoardOpo(props) {
 	const game = useSelector((state) => state.opGame)
-	const { grid, shape, rotation, x, y } = game
+	const { grid, shape, rotation, x, y, gameOver, isWin } = game
 
 	const block = shapes[shape][rotation]
 	const blockColor = shape
+
 	const gridSquares = grid?.map((rowArray, row) => {
 
 		return rowArray?.map((square, col) => {
@@ -39,9 +40,20 @@ export default function GridBoardOpo(props) {
                 Opponent
             </div>
             <Select />
-            <div className='grid-board-opponent'>
-                {gridSquares}
-            </div>
+			{ !gameOver && !isWin ?
+				<div className='grid-board-opponent'>
+					{gridSquares}
+				</div>
+				:
+				isWin ?
+				<div className="Winner">
+					Winner !
+				</div>
+				:
+				<div className="Game_Over">
+					Game Over !
+				</div>
+			}
         </div>
 	)
 }

@@ -10,6 +10,7 @@ export const RESTART    = "RESTART"
 export const UPDATE     = "UPDATE"
 export const UPDATEOP   = "UPDATEOP"
 export const RESETOP    = "RESETOP"
+export const CANRESTART = "CANRESTART"
 
 export const moveLeft = () => {
     return {type: MOVE_LEFT}
@@ -60,6 +61,13 @@ export const updateDataOp = (data) => {
 export const resetDataOp = () => {
     return {
         type: RESETOP
+    }
+}
+
+export const canRestart = (player) => {
+    return {
+        type: CANRESTART,
+        payload: player
     }
 }
 

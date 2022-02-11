@@ -18,8 +18,31 @@ const {
 class Engine {
     constructor(game, player) {
         if (!game) throw Error('incorrect game')
+        if (!player) throw Error('incorrect player')
         this.game = game
         this.player = player
+        this.init()
+    }
+
+    get info() {
+        return {
+            grid: this.field,
+            shape: this.piece,
+            rotation: this.rotation,
+            x: this.points[0],
+            y: this.points[1],
+            yShadow: this.yShadow,
+            nextShape: this.nextPiece,
+            isRunning: this.game.isStarted,
+            score: this.score,
+            gameOver: this.isFailed,
+            isWin: this.isWin,
+            canRestart: this.game.canRestart,
+            winner: this.game.winner
+        }
+    }
+
+    init() {
         this.field = this.createField()
         this.currentPiece = 0
         this.isFailed = false
@@ -34,19 +57,12 @@ class Engine {
         this.yShadow = -2
     }
 
-    get info() {
-        return {
-            grid: this.field,
-            shape: this.piece,
-            rotation: this.rotation,
-            x: this.points[0],
-            y: this.points[1],
-            yShadow: this.yShadow,
-            nextShape: this.nextPiece,
-            isRunning: true,
-            score: this.score,
-            gameOver: this.isFailed
-        }
+    win() {
+        let listener = this.game?.room?.listener
+        this.isWin = true
+        this.clean()
+        if (typeof listener === 'function')
+            listener("win game", this.player)
     }
 
     createField() {
@@ -62,6 +78,11 @@ class Engine {
             )
         }
         return !!this.interval
+    }
+
+    restart() {
+        this.init()
+        this.start()
     }
 
     movePiece (key) {
@@ -97,6 +118,7 @@ class Engine {
         else {
             this.clean()
         }
+        this.game.checkWinner()
         this.score += this.checkRows()
         if (typeof listener === 'function')
             listener("piece moved", this.player)

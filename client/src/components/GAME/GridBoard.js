@@ -9,7 +9,7 @@ export default function GridBoard(props) {
 
 	const block = shapes[shape][rotation]
 	const blockColor = shape
-	console.log(yShadow)
+
 	const gridSquares = grid?.map((rowArray, row) => {
 
 		return rowArray?.map((square, col) => {

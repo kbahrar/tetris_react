@@ -219,6 +219,26 @@ code {
   color: #126E82;
 }
 
+.Game_Over {
+  width: 200px;
+  height: 100px;
+  padding-top: 30px;
+  text-align: center;
+  font-size: x-large;
+  background-color: #99d6e3;
+  color: rgb(212, 24, 24);
+}
+
+.Winner {
+  width: 200px;
+  height: 100px;
+  padding-top: 30px;
+  text-align: center;
+  font-size: x-large;
+  background-color: #99d6e3;
+  color: rgb(23, 180, 23);
+}
+
 /* next block */
 .next-block {
   display: grid;
@@ -273,6 +293,7 @@ code {
   grid-area: b;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   margin-bottom: 20px;
 }
 

@@ -2,7 +2,7 @@ import {
     defaultState, nextRotation, canMoveTo, addBlockToGrid, checkRows, randomShape
 } from '../utils'
 import {
-    MOVE_RIGHT, MOVE_LEFT, MOVE_DOWN, ROTATE, PAUSE, RESUME, RESTART, DROP, UPDATE
+    MOVE_RIGHT, MOVE_LEFT, MOVE_DOWN, ROTATE, PAUSE, RESUME, RESTART, DROP, UPDATE, CANRESTART, canRestart
 } from "../actions"
 
 const gameReducer = (state = defaultState(), action) => {
@@ -88,6 +88,10 @@ const gameReducer = (state = defaultState(), action) => {
         
         case UPDATE:
             return action.payload
+
+        case CANRESTART:
+            return {...state, winner: action.payload, canRestart: true}
+
         default:
             return state
     }

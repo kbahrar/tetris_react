@@ -30,7 +30,10 @@ export const defaultState = () => {
 		score: 0,
 		speed: 1000,
 		gameOver: false,
-		yShadow: -2
+		yShadow: -2,
+		isWin: false,
+		canRestart: false,
+		winner: null
 	}
 }
 

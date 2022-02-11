@@ -11,7 +11,7 @@ import {
     setMsgs,
     updateData,
     updateDataOp,
-    addOpponent
+    canRestart
 } from "../actions"
 
 function Sockets(props) {
@@ -66,17 +66,24 @@ function Sockets(props) {
     useEffect(() => {
         if (socket) {
             socket.on('piece moved', (data, player) => {
-                console.log(opponent)
                 if (auth?.name === player)
                     dispatch(updateData(data))
                 else if (opponent === player)
                     dispatch(updateDataOp(data))
             })
 
+            socket.on('win game', (data, player) => {
+                dispatch(canRestart(player))
+                if (auth?.name === player)
+                    dispatch(updateData(data))
+            })
+
         }
         return () => {
-            if (socket)
+            if (socket) {
                 socket.off('piece moved')
+                socket.off('win game')
+            }
         }
     }, [socket, auth, opponent]);
     

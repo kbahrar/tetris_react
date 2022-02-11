@@ -13,7 +13,8 @@ class Game {
         this.engines = {}
         this.isStarted = false
         this.isPaused = false
-        this.lastPieces = []
+        this.canRestart = false
+        this.winner = null
         this.generate()
     }
 
@@ -31,8 +32,50 @@ class Game {
                 this.engines[player.name].start()
             }
             this.isStarted = true
+            this.winner = null
         }
         return this.isStarted
+    }
+
+    restart() {
+        if (this.isStarted)
+            throw new Error('game already started')
+        else {
+            for (const player of Object.values(this.room.players)) {
+                if (!this.engines[player.name])
+                    this.engines[player.name] = new Engine(this, player)
+                this.engines[player.name].restart()
+                this.winner = null
+            }
+            this.isStarted = true
+        }
+    }
+
+    checkWinner() {
+        let gameOvers = 0
+        let numPlayers = 0
+        let winPlayer = null
+        for (const player of Object.values(this.room.players)) {
+            numPlayers++
+            let engine = this.engines[player.name]
+            if (engine.info.gameOver)
+                gameOvers++
+            else
+                winPlayer = player.name
+        }
+        if (numPlayers > 1 && numPlayers - 1 === gameOvers && winPlayer) {
+            this.isStarted = false
+            this.canRestart = true
+            this.winner = winPlayer
+            this.engines[winPlayer].win()
+            return true
+        }
+        else if (numPlayers === gameOvers) {
+            this.isStarted = false
+            this.canRestart = true
+            return true
+        }
+        return false
     }
 
     addLines (playerName, numLines) {

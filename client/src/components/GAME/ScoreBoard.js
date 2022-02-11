@@ -9,18 +9,14 @@ export default function ScoreBoard(props) {
     const socket = useSelector(state => state.socket)
     const auth = useSelector(state => state.auth)
     const [msg, setMsg] = React.useState('')
-    const { score, isRunning, gameOver } = game
+    const { score, isRunning, gameOver, canRestart } = game
     const play_btn = document.querySelector("#play-btn")
-    const restart_btn = document.querySelector("#restart-btn")
 
     const togglePlay = () => {
         play_btn.blur()
         if (gameOver) { return }
-        if (isRunning) {
-            dispatch(pause())
-        } else {
+        if (!isRunning) {
             socket.emit('start game')
-            dispatch(resume())
         }
     }
 
@@ -40,14 +36,14 @@ export default function ScoreBoard(props) {
             {auth?.name === room?.host ?
                 <div className="controls">
                     <button id="play-btn" className="control-button" onClick={togglePlay}>
-                        {isRunning ? 'Pause' : 'Play'}
+                        {!isRunning ? 'Start' : 'Restart'}
                     </button>
-                    <button id="restart-btn" className="control-button" onClick={(e) => {
+                    {/* <button id="restart-btn" className="control-button" onClick={(e) => {
                         restart_btn.blur()
                         dispatch(restart())
                     }}>
                         Restart
-                    </button>
+                    </button> */}
                 </div>
                 :
                 <></>
