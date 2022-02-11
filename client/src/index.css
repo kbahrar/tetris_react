@@ -16,13 +16,13 @@
   --color-7: #c22828;
   --color-9: #3f4344;
   
-  --color-1-shadow: #d47434a4;
-  --color-2-shadow: #d4ba2562;
-  --color-3-shadow: #1919d82d;
-  --color-4-shadow: #ac17d13d;
-  --color-5-shadow: #1ecf1e48;
-  --color-6-shadow: #1f91ca46;
-  --color-7-shadow: #c228283f;
+  --color-1-shadow: rgba(223, 113, 11, 0.5);
+  --color-2-shadow: rgba(248, 211, 3, 0.5);
+  --color-3-shadow: rgba(42, 8, 238, 0.192);
+  --color-4-shadow: rgba(248, 7, 135, 0.198);
+  --color-5-shadow: rgba(26, 238, 18, 0.198);
+  --color-6-shadow: rgba(0, 234, 255, 0.192);
+  --color-7-shadow: rgba(255, 0, 0, 0.192);
 
   --button-color-t: rgba(200, 200, 200, 1);
   --button-color-r: rgba(150, 150, 150, 1);
@@ -140,6 +140,16 @@ code {
 }
 
 /* Grid Square */
+.grid-square-shadow {
+  border-style: solid;
+  border-color: #93999b;
+  background-color: white;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border-width: 1px;
+  opacity: 0.5;
+}
+
 .grid-square {
   border-style: solid;
   border-color: #93999b;

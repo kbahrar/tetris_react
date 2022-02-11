@@ -46,7 +46,7 @@ module.exports = class SocketSubscription {
 
     restartGame() {
         try {
-            if (GameSubscription.start.call(this, this.listener.bind(this))) {     
+            if (GameSubscription.restart.call(this, this.listener.bind(this))) {     
                 const room = this.player.room
                 this.io.to(room.name).emit('game started', GameSubscription.getInfo.call(this))
             }

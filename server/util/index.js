@@ -23,11 +23,11 @@ const canMoveTo = (shape, grid, x, y, rotation) => {
 			if (currentShape[row][col] !== 0) {
 				const proposedX = col + x
 				const proposedY = row + y
-				if (proposedY < 0) {
+				if (proposedY < 0 && proposedX >= 0 && proposedX <= 9) {
 					continue
 				}
 
-				const possibleRow = grid[proposedY]
+				const possibleRow = grid[proposedY]; // 7liwa point virgule
 				if (possibleRow) {
 					if (possibleRow[proposedX] === undefined || possibleRow[proposedX] !== 0)
 						return false
@@ -54,8 +54,9 @@ const addBlockToGrid = (shape, grid, x, y, rotation) => {
 			if (block[row][col]) {
 				const yIndex = row + y
 
-				if (yIndex < 0) {
+				if (yIndex <= 0) {
 					blockoffGrid = true
+					// return {grid: grid, gameOver: blockoffGrid}
 				}
 				else {
 					newGrid[row + y][col + x] = shape

@@ -33,7 +33,8 @@ class Room {
 
     add(player) {
         if (!player) throw new Error('incorrect player')
-        if (this.isLocked) throw new Error("can't join this room")
+        if (this.isLocked) throw new Error("this room already start a game !")
+        if (this.info.players.length > 4) throw new Error("this room is full !")
         if (!this.players[player.name]) {
             this.players[player.name] = player
             return true
@@ -47,6 +48,7 @@ class Room {
                 this.game = new Game(this)
                 this.listener = listener
             }
+            this.isLocked = true
             return this.game.start()
         }
         return false
@@ -57,6 +59,7 @@ class Room {
             if (!this.game) {
                 this.game = new Game(this)
             }
+            this.isLocked = true
             return this.game.restart()
         }
         return false

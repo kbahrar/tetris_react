@@ -42,6 +42,7 @@ class Game {
         if (this.isStarted)
             throw new Error('game already started')
         else {
+            this.init()
             for (const player of Object.values(this.room.players)) {
                 if (!this.engines[player.name])
                     this.engines[player.name] = new Engine(this, player)
@@ -72,6 +73,7 @@ class Game {
             this.canRestart = true
             this.winner = winPlayer
             this.engines[winPlayer].win()
+            this.room.isLocked = false
             return true
         }
         else if (numPlayers === gameOvers) {
