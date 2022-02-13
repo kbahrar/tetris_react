@@ -11,7 +11,7 @@ module.exports = class SocketSubscription {
             this.socket = socket
             this.player = new Player(this.socket.username)
             this.socket.emit('connected', this.player)
-            this.sendMsgGame('Connected !')
+            this.sendMsgGame('Connected !', "success")
             this.handleEvents()
         } catch (error) {
             this.handleError(error)
@@ -55,11 +55,12 @@ module.exports = class SocketSubscription {
         }
     }
 
-    sendMsgGame (msg) {
+    sendMsgGame (msg, type = "normal") {
         if (this.player) {
             const msgObj = {
                 sender: this.player.name,
-                msg: msg
+                msg,
+                type
             }
             this.io.emit('msg game', msgObj)
         }
@@ -68,11 +69,12 @@ module.exports = class SocketSubscription {
         }
     }
 
-    sendMessagesRoom(msg) {
+    sendMessagesRoom(msg, type = "normal") {
         if (this.player && this.player.room) {
             const msgObj = {
                 sender: this.player.name,
-                msg: msg
+                msg,
+                type
             }
             this.player.room.messages.push(msgObj)
             this.io.to(this.player.room.name).emit('msg room', msgObj);
@@ -98,7 +100,7 @@ module.exports = class SocketSubscription {
             if (room) {
                 this.socket.join(room.name);
                 this.socket.emit('room joined', room)
-                this.sendMessagesRoom('Created the Room !')
+                this.sendMessagesRoom('Created the Room !', 'success')
             }
         }
         catch (error) {
@@ -112,7 +114,7 @@ module.exports = class SocketSubscription {
             if (room) {
                 this.socket.join(room.name);
                 this.io.to(room.name).emit('room joined', room)
-                this.sendMessagesRoom('Joined the Room !')
+                this.sendMessagesRoom('Joined the Room !', 'success')
             }
         }
         catch (error) {
@@ -140,8 +142,7 @@ module.exports = class SocketSubscription {
             if (this.player && this.player.room) {
                 const room = this.player.room
                 const name = this.player.name
-                this.sendMessagesRoom('Exited the Room !')
-                console.log('exited')
+                this.sendMessagesRoom('Exited the Room !', 'failed')
                 if (RoomSubscription.exit.call(this)) {
                     this.socket.leave(room.name)
                     this.socket.emit('room exited')
@@ -156,7 +157,7 @@ module.exports = class SocketSubscription {
     disconnect() {
         try {
             if (this.player) {
-                this.sendMessagesRoom('Exited the Room !')
+                this.sendMessagesRoom('Exited the Room !', 'failed')
                 const room = this.player.room
                 const name = this.player.name
                 this.player.disconnect()
@@ -177,7 +178,7 @@ module.exports = class SocketSubscription {
                 const room = player.room
                 const info = GameSubscription.getInfo.call({ player })
                 if (event == 'game over') {
-                    this.sendMessagesRoom('game over !')
+                    this.sendMessagesRoom('game over !', 'failed')
                 }
                 else if (info)
                     this.io.to(room.name).emit(event, info, player.name)

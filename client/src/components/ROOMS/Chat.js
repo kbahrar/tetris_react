@@ -27,10 +27,11 @@ export default function Chat(props) {
             </div>
             <div className="chat-group">
                 {messages.map((item, index) => (
-                    <div className="message" key={index}>
+                    <div className={"message-" + item.type} key={index}>
                         <span className="message-sender">
-                            {item.sender}
-                        </span> : {item.msg}
+                            {item.sender}:
+                        </span>
+                        <span className="message">{item.msg}</span>
                     </div>
                 ))}
             </div>

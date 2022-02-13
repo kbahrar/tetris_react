@@ -484,20 +484,46 @@ input, textarea {
   flex-direction: column;
 }
 
-.message {
+.message-normal {
   margin: 20px;
   font-family: monospace;
   color: #126E82;
-  display: flex;
+  display: block;
+  justify-content: left;
+  text-align: left;
+  font-weight: bolder;
+}
+
+.message-success {
+  margin: 20px;
+  font-family: monospace;
+  color: #0d880d;
+  display: block;
+  justify-content: left;
+  text-align: left;
+  font-weight: bolder;
+}
+
+.message-failed {
+  margin: 20px;
+  font-family: monospace;
+  color: #c22828d3;
+  display: inline-block;
   justify-content: left;
   text-align: left;
   font-weight: bolder;
 }
 
 .message-sender {
-  color: #126E82;
-  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bolder;
+}
+
+.message {
+  margin-left: 5px;
+  font-family:sans-serif;
+  font-weight:lighter;
 }
 
 .chat-group {

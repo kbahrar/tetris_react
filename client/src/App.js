@@ -20,6 +20,7 @@ function App() {
 	const navigate = useNavigate()
 
 	React.useEffect(() => {
+		console.log(auth)
 		if (!auth)
 			navigate("/");
 		else if (room)
