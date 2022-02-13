@@ -6,6 +6,7 @@ import GridBoardOpo from "./GridBoardOpponent";
 
 export default function NextBlock(props) {
     const nextShape = useSelector((state) => state.game.nextShape)
+    const room = useSelector((state) => state.room)
 
     const box = shapes[nextShape][0]
     const color = nextShape
@@ -22,7 +23,11 @@ export default function NextBlock(props) {
     return (
         <div className="next-block">
             {grid}
-            <GridBoardOpo />
+            {room?.players?.length > 1 ?
+                <GridBoardOpo />
+                :
+                <></>
+            }
         </div>
     )
 }

@@ -5,7 +5,10 @@ const roomReducer = (state = null, action) => {
         case ROOM:
             return action.payload
         case MSGROOM:
-            return {...state, messages: [...state.messages, action.payload]}
+            if (state)
+                return {...state, messages: [...state.messages, action.payload]}
+            else
+                return false
         case EXIT_ROOM:
             return false
         default:

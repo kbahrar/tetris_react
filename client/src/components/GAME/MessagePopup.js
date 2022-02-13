@@ -32,7 +32,6 @@ export default function MessagePopup(props) {
     }
 
     if (winner) {
-        console.log(winner, username)
         msg.messages = ['You can restart your game by click in restart button']
         if (winner === username)
             msg.title = "YOU ARE THE WINNER !"
@@ -49,4 +48,4 @@ export default function MessagePopup(props) {
             {messages}
         </div>
     )
-}
+} 

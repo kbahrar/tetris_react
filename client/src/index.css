@@ -143,11 +143,10 @@ code {
 .grid-square-shadow {
   border-style: solid;
   border-color: #93999b;
-  background-color: white;
   width: var(--tile-size);
   height: var(--tile-size);
   border-width: 1px;
-  opacity: 0.5;
+  opacity: 2;
 }
 
 .grid-square {

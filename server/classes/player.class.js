@@ -31,9 +31,9 @@ class Player {
 
     joinRoom (roomName) {
         if (!this.room) {
+            console.log(roomName)
             const room = Room.getRoom(roomName);
-            if (!room) throw new Error('room doesnt exist')
-            if (room.add(this))
+            if (room && room.add(this))
                 this.room = room
             else
                 this.room = new Room(roomName, this)

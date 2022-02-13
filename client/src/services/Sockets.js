@@ -34,6 +34,7 @@ function Sockets(props) {
             })
 
             socket.on("room joined", (room) => {
+                console.log('joined')
                 dispatch(joinRoom(room))
             })
 

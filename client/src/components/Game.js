@@ -7,38 +7,37 @@ import MessagePopup from './GAME/MessagePopup'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { io } from "socket.io-client";
-import { connectSocket, setError } from '../actions'
+import { connectSocket, setError, joinRoom } from '../actions'
 
 export default function Game() {
     const ENDPOINT = "http://localhost:5000"
     const dispatch = useDispatch()
     const socket = useSelector(state => state.socket)
     const auth = useSelector(state => state.auth)
-    const room = useSelector(state => state.room)
+    const existRoom = useSelector(state => state.room)
 
-    const {newRoom, username} = useParams()
+    const {room, username} = useParams()
 
     React.useEffect(() => {
-        if (!auth?.name) {
+        if (!auth?.name || !existRoom) {
             const newSocket = io(ENDPOINT, {
                 withCredentials: true,
             })
             document.cookie = `name=${username}`
             dispatch(connectSocket(newSocket))
-            if (!socket.connected)
+            if (newSocket)
+                newSocket.emit("join room", room)
+            if (!newSocket?.connected)
                 dispatch(setError("failed to connect"))
-        }
-
-        if (!room) {
-            if (socket)
-                socket.emit("join room", newRoom)
         }
         
         return () => {
-            if (socket)
+            if (socket) {
                 socket.emit('exit room')
+                dispatch(joinRoom(null))
+            }
         };
-    }, []);
+    }, [room, username]);
     
     return (
         <>

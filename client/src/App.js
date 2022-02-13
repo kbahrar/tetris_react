@@ -12,6 +12,7 @@ import Sockets from './services/Sockets';
 import Game from './components/Game';
 import Login from './components/Login';
 import Rooms from './components/Rooms';
+import Header from './components/UTILS/Header';
 
 function App() {
 	const auth = useSelector((state) => state.auth)
@@ -30,9 +31,7 @@ function App() {
 	return (
 		<div className="App">
 			<Sockets>
-				<header className="App-header">
-					<h1 className="App-title">Tetris</h1>
-				</header>
+				<Header />
 				<Routes>
 					<Route path="/" element={<Login />} />
 					<Route path="rooms" element={<Rooms />} />

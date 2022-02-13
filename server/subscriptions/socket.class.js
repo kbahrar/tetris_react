@@ -123,7 +123,7 @@ module.exports = class SocketSubscription {
     getRoom () {
         const room = RoomSubscription.getInfo.call(this);
         if (room)
-            this.socket.emit('room joined', room)
+            this.io.to(room.name).emit('room joined', room)
     }
 
     MovePieces (key) {
