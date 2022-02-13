@@ -112,41 +112,42 @@ code {
 
 /* colors shadows */
 .color-1-shadow{
-  background-color: var(--color-1-shadow);
+  background-color: var(--color-1);
 }
 
 .color-2-shadow {
-  background-color: var(--color-2-shadow);
+  background-color: var(--color-2);
 }
 
 .color-3-shadow {
-  background-color: var(--color-3-shadow);
+  background-color: var(--color-3);
 }
 
 .color-4-shadow {
-  background-color: var(--color-4-shadow);
+  background-color: var(--color-4);
 }
 
 .color-5-shadow {
-  background-color: var(--color-5-shadow);
+  background-color: var(--color-5);
 }
 
 .color-6-shadow {
-  background-color: var(--color-6-shadow);
+  background-color: var(--color-6);
 }
 
 .color-7-shadow {
-  background-color: var(--color-7-shadow);
+  background-color: var(--color-7);
 }
 
 /* Grid Square */
 .grid-square-shadow {
   border-style: solid;
   border-color: #93999b;
+  /* background-color: white; */
   width: var(--tile-size);
   height: var(--tile-size);
   border-width: 1px;
-  opacity: 2;
+  opacity: 0.3;
 }
 
 .grid-square {
