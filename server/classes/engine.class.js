@@ -91,7 +91,7 @@ class Engine {
         if (!this.isFailed && !this.isWin) {
             switch (key) {
                 case MOVE_DOWN:
-                    this.moveDown()
+                    this.moveDown(listener)
                     break;
                 
                 case MOVE_LEFT:
@@ -124,7 +124,7 @@ class Engine {
             listener("piece moved", this.player)
     }
 
-    moveDown () {
+    moveDown (listener) {
         if (canMoveTo(this.piece, this.field, this.points[0], this.points[1] + 1, this.rotation)) {
             this.points[1] += 1
         }
@@ -132,8 +132,8 @@ class Engine {
             let ret = addBlockToGrid(this.piece, this.field, this.points[0], this.points[1], this.rotation)
             this.field = ret.grid
             this.isFailed = ret.gameOver
-            if (this.isFailed)
-                this.clean()
+            if (this.isFailed && typeof listener === 'function')
+                listener("game over", this.player)
             this.points = [5, -2]
             this.yShadow = -2
             this.rotation = 0

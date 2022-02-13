@@ -70,7 +70,6 @@ module.exports = class SocketSubscription {
 
     sendMessagesRoom(msg) {
         if (this.player && this.player.room) {
-            console.log(this.player.name)
             const msgObj = {
                 sender: this.player.name,
                 msg: msg
@@ -177,7 +176,10 @@ module.exports = class SocketSubscription {
             if (player && player.room) {
                 const room = player.room
                 const info = GameSubscription.getInfo.call({ player })
-                if (info)
+                if (event == 'game over') {
+                    this.sendMessagesRoom('game over !')
+                }
+                else if (info)
                     this.io.to(room.name).emit(event, info, player.name)
             }
         } catch (error) {

@@ -68,7 +68,9 @@ class Game {
             else
                 winPlayer = player.name
         }
-        if (numPlayers > 1 && numPlayers - 1 === gameOvers && winPlayer) {
+        if ((numPlayers > 1 && numPlayers - 1 === gameOvers && winPlayer) || (this.room.isMulti && numPlayers == 1)) {
+            if (this.room.isMulti && numPlayers == 1)
+                this.room.isMulti = false
             this.isStarted = false
             this.canRestart = true
             this.winner = winPlayer
@@ -79,6 +81,7 @@ class Game {
         else if (numPlayers === gameOvers) {
             this.isStarted = false
             this.canRestart = true
+            this.room.isLocked = false
             return true
         }
         return false

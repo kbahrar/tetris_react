@@ -11,6 +11,7 @@ class Room {
         this.players = { [player.name]: player }
         this.messages = []
         this.isLocked = false
+        this.isMulti = false
         _Rooms[this.name] = this
     }
 
@@ -37,6 +38,8 @@ class Room {
         if (this.info.players.length > 4) throw new Error("this room is full !")
         if (!this.players[player.name]) {
             this.players[player.name] = player
+            if (this.info.players.length > 1)
+                this.isMulti = true
             return true
         }
         return false

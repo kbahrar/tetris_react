@@ -54,7 +54,7 @@ const addBlockToGrid = (shape, grid, x, y, rotation) => {
 			if (block[row][col]) {
 				const yIndex = row + y
 
-				if (yIndex <= 0) {
+				if (yIndex < 0) {
 					blockoffGrid = true
 					// return {grid: grid, gameOver: blockoffGrid}
 				}
@@ -64,7 +64,11 @@ const addBlockToGrid = (shape, grid, x, y, rotation) => {
 			}
 		}
 	}
-	return {grid: newGrid, gameOver: blockoffGrid}
+	if (blockoffGrid === false)
+		return {grid: newGrid, gameOver: blockoffGrid}
+	else
+		return {grid: grid, gameOver: blockoffGrid}
+
 }
 
 const shapes = [
