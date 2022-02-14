@@ -63,7 +63,7 @@ export default function ScoreBoard(props) {
                 chat
             </div>
             <div className="chat-group">
-                {room?.messages.map((item, index) => (
+                {room?.messages?.map((item, index) => (
                     <div className={"message-" + item.type} key={index}>
                         <span className="message-sender">
                             {item.sender}:

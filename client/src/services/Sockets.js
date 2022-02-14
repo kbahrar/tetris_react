@@ -22,6 +22,7 @@ function Sockets(props) {
 
     useEffect(() => {
         if (socket) {
+            console.log("THERE");
             socket.on("connected", (player) => {
                 dispatch(removeError())
                 dispatch(authLogin(player))

@@ -13,13 +13,11 @@ export default function Game() {
     const ENDPOINT = "http://localhost:5000"
     const dispatch = useDispatch()
     const socket = useSelector(state => state.socket)
-    const auth = useSelector(state => state.auth)
-    const existRoom = useSelector(state => state.room)
 
     const {room, username} = useParams()
 
     React.useEffect(() => {
-        if (!auth?.name || !existRoom) {
+        if (!socket) {
             const newSocket = io(ENDPOINT, {
                 withCredentials: true,
             })
@@ -29,6 +27,9 @@ export default function Game() {
                 newSocket.emit("join room", room)
             if (!newSocket?.connected)
                 dispatch(setError("failed to connect"))
+        }
+        else {
+            socket.emit("join room", room)
         }
         
         return () => {

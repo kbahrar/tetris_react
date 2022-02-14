@@ -22,10 +22,10 @@ function App() {
 	React.useEffect(() => {
 		if (!auth)
 			navigate("/");
-		else if (room)
-			navigate(`${room.name}[${auth.name}]`)
-		else
+		else if (!room)
 			navigate("/rooms")
+		else
+			navigate(`${room.name}[${auth.name}]`)
 	}, [auth, room, navigate])
 
 	return (
