@@ -13,6 +13,7 @@ export default function Select(props) {
     const players = roomPlayers?.map(item => {
         if (item !== auth?.name)
             return <option key={item} value={item}>{item}</option>
+        return <></>
     })
 
     const handleChange = (e) => {
@@ -31,10 +32,11 @@ export default function Select(props) {
                     if (item !== auth?.name) {
                         dispatch(addOpponent(item))
                     }
+                    return true
                 })
             }
         }
-    }, [auth, room]);
+    }, [auth, room, dispatch]);
 
 	return (
         <select className="select-dev" id="select" value={player} onChange={handleChange}>

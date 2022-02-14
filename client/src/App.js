@@ -20,14 +20,13 @@ function App() {
 	const navigate = useNavigate()
 
 	React.useEffect(() => {
-		console.log(auth)
 		if (!auth)
 			navigate("/");
 		else if (room)
 			navigate(`${room.name}[${auth.name}]`)
 		else
 			navigate("/rooms")
-	}, [auth, room])
+	}, [auth, room, navigate])
 
 	return (
 		<div className="App">

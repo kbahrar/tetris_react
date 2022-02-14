@@ -1,8 +1,7 @@
 import React from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 
 export default function ScoreBoard(props) {
-    const dispatch = useDispatch()
     const game = useSelector((state) => state.game)
     const room = useSelector(state => state.room)
     const socket = useSelector(state => state.socket)

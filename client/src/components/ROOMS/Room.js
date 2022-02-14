@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { joinRoom } from "../../actions";
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import Error from "../UTILS/Error";
 
 export default function Room(props) {

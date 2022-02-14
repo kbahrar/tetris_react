@@ -37,7 +37,8 @@ export default function Game() {
                 dispatch(joinRoom(null))
             }
         };
-    }, [room, username]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     
     return (
         <>

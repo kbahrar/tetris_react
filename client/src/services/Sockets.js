@@ -18,7 +18,6 @@ function Sockets(props) {
     const socket = useSelector((state) => state.socket);
     const auth = useSelector((state) => state.auth);
     const opponent = useSelector(state => state.auth?.opponent)
-    const room = useSelector((state) => state.room);
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -61,6 +60,7 @@ function Sockets(props) {
                 socket.emit('get room')
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket]);
 
     useEffect(() => {
@@ -85,6 +85,7 @@ function Sockets(props) {
                 socket.off('win game')
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket, auth, opponent]);
     
     return props.children;
