@@ -42,7 +42,7 @@ export default function Room(props) {
                 Rooms
             </div>
             <div className="rooms-group">
-                {rooms.map((item, index) => (
+                {rooms?.map((item, index) => (
                     <div key={index} className="user-online">
                         {item}
                         <div

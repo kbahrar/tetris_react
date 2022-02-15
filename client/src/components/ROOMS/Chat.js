@@ -15,7 +15,8 @@ export default function Chat(props) {
         if (!msg)
             e.preventDefault()
         else {
-            socket.emit("msg game", msg)
+            if (socket)
+                socket.emit("msg game", msg)
             setMsg("")
         }
     }
@@ -26,7 +27,7 @@ export default function Chat(props) {
                 chat
             </div>
             <div className="chat-group">
-                {messages.map((item, index) => (
+                {messages?.map((item, index) => (
                     <div className={"message-" + item.type} key={index}>
                         <span className="message-sender">
                             {item.sender}:

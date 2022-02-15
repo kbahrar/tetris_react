@@ -17,7 +17,7 @@ export default function Users(props) {
             <div className="header-online">
                 {users.length} users online
             </div>
-            {users.map((item, index) => (
+            {users?.map((item, index) => (
                 <div key={index} className="user-online">{item}<div className="dot-online"></div></div>
             ))}
         </div>
