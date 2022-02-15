@@ -8,10 +8,10 @@ export default function ScoreBoard(props) {
     const auth = useSelector(state => state.auth)
     const [msg, setMsg] = React.useState('')
     const { score, isRunning, gameOver, canRestart } = game
-    const play_btn = document.querySelector("#play-btn")
-    const restart_btn = document.querySelector("#restart-btn")
+    
 
     const start = () => {
+        const play_btn = document.querySelector("#play-btn")
         play_btn.blur()
         if (gameOver) { return }
         if (!isRunning) {
@@ -20,6 +20,7 @@ export default function ScoreBoard(props) {
     }
 
     const restart = () => {
+        const restart_btn = document.querySelector("#restart-btn")
         restart_btn.blur()
         if (canRestart) {
             socket.emit('restart game')
