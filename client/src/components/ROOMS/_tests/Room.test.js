@@ -72,7 +72,13 @@ describe("<Room />", () => {
     });
 
     test('test for click to add room', () => {
+        const socketTest = {
+            emit: (event) => {
+                return event
+            }
+        }
         const initialState = {
+            socket: socketTest,
             rooms: [
                 'haha',
                 'ohMyRoom'
@@ -86,7 +92,52 @@ describe("<Room />", () => {
         );
     
         expect(container).not.toBeEmptyDOMElement();
+        fireEvent.click(
+            getByText(container, 'CREATE ROOM'),
+        )
         
+        fireEvent.change(
+            getByPlaceholderText(container, 'room name'),
+            {target: {value: 'kbahrar'}}
+        )
+
+        expect(screen.getByPlaceholderText('room name').value).toBe('kbahrar')
+
+        fireEvent.click(
+            getByText(container, 'CREATE ROOM'),
+        )
+        expect(screen.getByPlaceholderText('room name').value).not.toBe('kbahrar')
+    });
+
+    test('test for click to join room', () => {
+        const socketTest = {
+            emit: (event) => {
+                return event
+            }
+        }
+        const initialState = {
+            error: 'yes there is error',
+            socket: socketTest,
+            rooms: [
+                'ohMyRoom'
+            ]
+        }
+        const store = mockStore(initialState)
+        const { container } = render(
+            <Provider store={store}>
+                <Room />
+            </Provider>
+        );
+    
+        expect(container).not.toBeEmptyDOMElement();
+
+        let element = screen.getByText(/yes there is error/i)
+        expect(element).toBeInTheDocument()
+
+        fireEvent.click(
+            getByText(container, 'JOIN'),
+        )
+
         fireEvent.change(
             getByPlaceholderText(container, 'room name'),
             {target: {value: 'kbahrar'}}

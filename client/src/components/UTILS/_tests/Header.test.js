@@ -4,6 +4,7 @@ import Header from '../Header';
 import React from 'react';
 import { createStore } from 'redux';
 import configureStore from 'redux-mock-store'
+import { fireEvent, getByText } from '@testing-library/dom';
 
 import reducers from '../../../reducers';
 
@@ -44,7 +45,15 @@ test('test for username', () => {
 });
 
 test('test for username joined room', () => {
+    const socketTest = {
+        emit: (event) => {
+            return event
+        }
+    }
+
     const initialState = {
+        socket: socketTest,
+        
         auth: {
             name: 'kamal',
         },
@@ -65,4 +74,7 @@ test('test for username joined room', () => {
     let button = screen.getByText(/EXIT/i);
     expect(linkElement).toBeInTheDocument();
     expect(button).toBeInTheDocument();
+    fireEvent.click(
+        getByText(container, /EXIT/i)
+    )
 });

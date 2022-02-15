@@ -28,7 +28,13 @@ describe("<Users />", () => {
     });
 
     test('test for exist users online', () => {
+        const socketTest = {
+            emit: (event) => {
+                return event
+            }
+        }
         const initialState = {
+            socket: socketTest,
             users: ['kamal', 'kbahrar']
         }
         const store = mockStore(initialState)

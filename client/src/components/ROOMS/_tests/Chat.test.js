@@ -26,6 +26,9 @@ describe("<Chat />", () => {
     
         element = screen.getByPlaceholderText('type message ...')
         expect(element).toBeInTheDocument();
+
+        element = screen.getByText('SEND')
+        expect(element).toBeInTheDocument();
     });
     
     test('test for msg exist', () => {
@@ -78,7 +81,14 @@ describe("<Chat />", () => {
     });
 
     test('test for click to send msg', () => {
+        const socketTest = {
+            emit: (event) => {
+                return event
+            }
+        }
+
         const initialState = {
+            socket: socketTest,
             messages: [
                 {
                     sender: 'kamal',
@@ -87,6 +97,7 @@ describe("<Chat />", () => {
                 }
             ]
         }
+
         const store = mockStore(initialState)
         const { container } = render(
             <Provider store={store}>
@@ -96,6 +107,10 @@ describe("<Chat />", () => {
     
         expect(container).not.toBeEmptyDOMElement();
         
+        fireEvent.click(
+            getByText(container, 'SEND'),
+        )
+
         fireEvent.change(
             getByPlaceholderText(container, 'type message ...'),
             {target: {value: 'kbahrar'}}

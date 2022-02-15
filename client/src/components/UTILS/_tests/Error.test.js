@@ -4,6 +4,7 @@ import Error from '../Error';
 import React from 'react';
 import { createStore } from 'redux';
 import configureStore from 'redux-mock-store'
+import { fireEvent, getByText } from '@testing-library/dom';
 
 import reducers from '../../../reducers';
 
@@ -43,4 +44,7 @@ test('test exist error', async () => {
 
     let linkElement = screen.getByText(/kamal/i);
     expect(linkElement).toBeInTheDocument();
+    fireEvent.click(
+        getByText(container, /x/i)
+    )
 });

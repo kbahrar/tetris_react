@@ -39,6 +39,10 @@ test('test for select options length', () => {
 
 test('test for select option value', () => {
     const initialState = {
+        auth: {
+            name: 'kamal',
+        },
+
         room: {
             players: ['kamal', 'kbahrar', 'koko']
         }
@@ -50,7 +54,7 @@ test('test for select option value', () => {
         </Provider>
     );
     expect(container).not.toBeEmptyDOMElement();
-    expect(screen.getByRole('option', { name: 'kamal' }).selected).toBe(true);
+    expect(screen.getByRole('option', { name: 'kbahrar' }).selected).toBe(true);
 });
 
 test('test for change select option value', () => {
