@@ -8,7 +8,6 @@ export default function Select(props) {
     const roomPlayers = useSelector(state => state.room?.players)
     const [player, setPlayer] = React.useState(auth?.opponent)
     const room = useSelector(state => state.room)
-    const input = document.querySelector("#select");
 
     const players = roomPlayers?.map(item => {
         if (item !== auth?.name)
@@ -17,6 +16,7 @@ export default function Select(props) {
     })
 
     const handleChange = (e) => {
+        const input = document.querySelector("#select");
         input.blur()
         if (player !== e.target.value) {
             setPlayer(e.target.value)
@@ -39,7 +39,7 @@ export default function Select(props) {
     }, [auth, room, dispatch]);
 
 	return (
-        <select className="select-dev" id="select" value={player} onChange={handleChange}>
+        <select role='select' className="select-dev" id="select" value={player} onChange={handleChange}>
            {players}
         </select>
 	)

@@ -41,7 +41,7 @@ const canMoveTo = (shape, grid, x, y, rotation) => {
 	return true
 }
 
-// adds current shape to grid
+// adds current shape to grid // 1 [10][20] 1 0 
 const addBlockToGrid = (shape, grid, x, y, rotation) => {
 	let blockoffGrid = false
 	const block = shapes[shape][rotation]
