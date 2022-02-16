@@ -1,19 +1,9 @@
 // GAME actions
-export const PAUSE      = "PAUSE"
-export const RESUME     = "RESUME"
 export const RESTART    = "RESTART"
 export const UPDATE     = "UPDATE"
 export const UPDATEOP   = "UPDATEOP"
 export const RESETOP    = "RESETOP"
 export const CANRESTART = "CANRESTART"
-
-export const pause = () => {
-    return { type: PAUSE }
-}
-
-export const resume = () => {
-    return { type: RESUME }
-}
 
 export const restart = () => {
     return { type: RESTART }
