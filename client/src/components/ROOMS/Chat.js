@@ -15,8 +15,7 @@ export default function Chat(props) {
         if (!msg)
             e.preventDefault()
         else {
-            if (socket)
-                socket.emit("msg game", msg)
+            socket.emit("msg game", msg)
             setMsg("")
         }
     }

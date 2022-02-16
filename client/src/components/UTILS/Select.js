@@ -12,7 +12,6 @@ export default function Select(props) {
     const players = roomPlayers?.map(item => {
         if (item !== auth?.name)
             return <option key={item} value={item}>{item}</option>
-        return <></>
     })
 
     const handleChange = (e) => {
