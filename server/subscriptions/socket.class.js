@@ -167,7 +167,6 @@ module.exports = class SocketSubscription {
                 this.master.removeSocket(name)
             }
         } catch (error) {
-            console.log(error.message)
             this.handleError(error)
         }
     }

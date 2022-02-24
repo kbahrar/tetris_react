@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 import { connectSocket, setError } from "../actions";
 
 export default function Login (props) {
-    const ENDPOINT = "http://localhost:5000";
+    const ENDPOINT = "http://localhost:5000/";
     const [username, setUserName] = useState("");
     const dispatch = useDispatch()
 

@@ -7,12 +7,13 @@ import MessagePopup from './GAME/MessagePopup'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { io } from "socket.io-client";
-import { connectSocket, setError, joinRoom } from '../actions'
+import { connectSocket, setError, joinRoom, restart } from '../actions'
 
 export default function Game() {
-    const ENDPOINT = "http://localhost:5000"
+    const ENDPOINT = "http://localhost:5000/";
     const dispatch = useDispatch()
     const socket = useSelector(state => state.socket)
+    const existRoom = useSelector(state => state.room)
 
     const {room, username} = useParams()
 
@@ -28,7 +29,7 @@ export default function Game() {
             if (!newSocket?.connected)
                 dispatch(setError("failed to connect"))
         }
-        else {
+        else if (!existRoom) {
             socket.emit("join room", room)
         }
         
@@ -36,6 +37,7 @@ export default function Game() {
             if (socket) {
                 socket.emit('exit room')
                 dispatch(joinRoom(null))
+                dispatch(restart())
             }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps

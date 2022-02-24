@@ -6,13 +6,23 @@ const { ORIGIN } = require("../config")
 const _sockets = {};
 
 class Socket {
-    run(server) {
-        this.io = socketIo(server, {
-            cors: {
-                origin: ORIGIN,
-                credentials: true,
-            }
+    run(server, port) {
+        if (port)
+            this.io = socketIo(port, {
+                transports: ['websocket', 'polling'],
+                cors: {
+                    origin: ORIGIN,
+                    credentials: true,
+                },
         })
+        else if (server) {
+            this.io = new socketIo.Server(server, {
+                cors: {
+                    origin: ORIGIN,
+                    credentials: true,
+                }
+            })
+        }
 
         if (this.io) {
             this.io.use(socketCookieParser())
@@ -20,7 +30,7 @@ class Socket {
             this.io.on('connect', ((socket) => _sockets[socket.username] = new SocketSubScription(this, socket)).bind(this))
         }
     }
-
+    
     removeSocket(username) {
         delete _sockets[username]
     }
@@ -31,6 +41,11 @@ class Socket {
             return next()
         }
         return next(new Error('not authorized'))
+    }
+
+    close(cb) {
+        if (this.io)
+            this.io.close(cb)
     }
 }
 

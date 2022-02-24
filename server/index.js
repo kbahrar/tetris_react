@@ -1,6 +1,5 @@
 const express = require("express")
 const path = require('path')
-const socketIo = require("socket.io");
 const Socket = require("./classes/socket.class")
 
 const app = express()
@@ -17,7 +16,7 @@ app.get('*', (req, res) => {
     return;
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(
   PORT,
@@ -25,6 +24,6 @@ const server = app.listen(
 );
 
 const socket = new Socket()
-socket.run(server)
+socket.run(server, null)
 
-module.exports = server
+module.exports = {app, server}
