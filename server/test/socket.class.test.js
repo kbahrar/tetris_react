@@ -13,11 +13,13 @@ function connect(port, name) {
     })
 }
 
+const host = 5001
+
 describe("Socket class", () => {
     const data = {}
     beforeEach(() => {
         data.socket = new Socket()
-        data.socket.run(null, 1337)
+        data.socket.run(null, host)
     })
 
     afterEach((done) => {
@@ -25,7 +27,7 @@ describe("Socket class", () => {
     })
 
     it("Should connect with name hello", (done) => {
-        const io = connect(1337, 'hello')
+        const io = connect(host, 'hello')
         io.on('connect', () => {
             io.disconnect()
             done()
@@ -34,7 +36,7 @@ describe("Socket class", () => {
 
     it("Should not connect", (done) => {
         let connected = false
-        const io = socketClient.connect('http://localhost:1337')
+        const io = socketClient.connect(`http://localhost:${host}`)
         io.on('connect', () => {
             connected = true
         })
@@ -47,7 +49,7 @@ describe("Socket class", () => {
     });
 
     it("Should get online users", (done) => {
-        const io = connect(1337, 'hello')
+        const io = connect(host, 'hello')
         io.on('users', (data) => {
             expect(data.length).toBe(1)
             expect(data[0]).toBe('hello')
@@ -59,7 +61,7 @@ describe("Socket class", () => {
     });
 
     it("test create new room", (done) => {
-        const io = connect(1337, 'kamal')
+        const io = connect(host, 'kamal')
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
@@ -77,13 +79,13 @@ describe("Socket class", () => {
     });
 
     it("test join room", (done) => {
-        const io = connect(1337, 'kamal')
+        const io = connect(host, 'kamal')
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
             expect(data.host).toBe('kamal')
 
-            const io_2 = connect(1337, 'kbahrar')
+            const io_2 = connect(host, 'kbahrar')
 
             io_2.on('room joined', (data) => {
                 expect(data.name).toBe('room')
@@ -107,7 +109,7 @@ describe("Socket class", () => {
     });
 
     it("test list room", (done) => {
-        const io = connect(1337, 'hello');
+        const io = connect(host, 'hello');
 
         io.on('list room', (data) => {
             expect(data.length).toBe(1)
@@ -121,7 +123,7 @@ describe("Socket class", () => {
     });
 
     it("test get room", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
@@ -139,7 +141,7 @@ describe("Socket class", () => {
     });
 
     it("test exit room", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
@@ -155,7 +157,7 @@ describe("Socket class", () => {
     });
 
     it("test start game", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
@@ -171,7 +173,7 @@ describe("Socket class", () => {
     });
 
     it("should not start game", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('error', (data) => {
             expect(data).toBe('you need to join room first')
@@ -183,7 +185,7 @@ describe("Socket class", () => {
     });
 
     it("test restart game", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
@@ -199,7 +201,7 @@ describe("Socket class", () => {
     });
 
     it("should not restart game", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('error', (data) => {
             expect(data).toBe('you need to join room first')
@@ -211,7 +213,7 @@ describe("Socket class", () => {
     });
 
     it("test move piece", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('room joined', (data) => {
             expect(data.name).toBe('room')
@@ -230,7 +232,7 @@ describe("Socket class", () => {
     });
 
     it("should not move piece", (done) => {
-        const io = connect(1337, 'kamal');
+        const io = connect(host, 'kamal');
 
         io.on('error', (data) => {
             expect(data).toBe('you need to join room first')

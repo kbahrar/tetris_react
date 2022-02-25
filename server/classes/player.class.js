@@ -1,8 +1,11 @@
 const Room = require("./room.class")
+const checkInput = require('../util')
 const _players = {}
 
 class Player {
     constructor (name) {
+        if (!/[A-Za-z0-9]{1,20}/.test(name))
+            throw new Error('invalid username')
         if (Player.getPlayer(name))
             throw new Error("username already exist");
         this.name = name
