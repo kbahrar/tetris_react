@@ -19,10 +19,10 @@ export default function Game() {
 
     React.useEffect(() => {
         if (!socket) {
+            document.cookie = `name=${username}`
             const newSocket = io(ENDPOINT, {
                 withCredentials: true,
             })
-            document.cookie = `name=${username}`
             dispatch(connectSocket(newSocket))
             if (newSocket)
                 newSocket.emit("join room", room)

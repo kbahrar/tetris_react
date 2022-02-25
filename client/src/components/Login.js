@@ -20,10 +20,10 @@ export default function Login (props) {
             dispatch(setError("you should enter a username first"))
         }
         else {
+            document.cookie = `name=${username}`
             const socket = io(ENDPOINT, {
                 withCredentials: true,
             })
-            document.cookie = `name=${username}`
             dispatch(connectSocket(socket))
             if (!socket.connected)
                 dispatch(setError("failed to connect"))

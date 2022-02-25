@@ -36,7 +36,6 @@ describe("Socket class", () => {
         let connected = false
         const io = socketClient.connect('http://localhost:1337')
         io.on('connect', () => {
-            console.log('hi')
             connected = true
         })
         setTimeout(() => {
