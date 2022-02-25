@@ -7,7 +7,7 @@ import MessagePopup from './GAME/MessagePopup'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { io } from "socket.io-client";
-import { connectSocket, setError, joinRoom, restart } from '../actions'
+import { connectSocket, setError, joinRoom, restart, resetDataOp } from '../actions'
 
 export default function Game() {
     const ENDPOINT = "http://localhost:5000/";
@@ -46,6 +46,7 @@ export default function Game() {
         return () => {
             if (socket) {
                 socket.emit('exit room')
+                dispatch(resetDataOp())
                 dispatch(joinRoom(null))
                 dispatch(restart())
             }
