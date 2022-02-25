@@ -17,8 +17,18 @@ export default function Game() {
 
     const {room, username} = useParams()
 
+    const checkUsername = new RegExp(
+        '^([A-Za-z0-9]{1,20})$'
+    );
+
     React.useEffect(() => {
-        if (!socket) {
+        if (!checkUsername.test(username)) {
+            dispatch(setError("username should be alphanumeric and length less than 20!"))
+        }
+        else if (!checkUsername.test(username)) {
+            dispatch(setError("room name should be alphanumeric and length less than 20!"))
+        }
+        else if (!socket) {
             document.cookie = `name=${username}`
             const newSocket = io(ENDPOINT, {
                 withCredentials: true,

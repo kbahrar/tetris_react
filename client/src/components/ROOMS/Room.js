@@ -1,12 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setError, setRooms } from "../../actions";
 import Error from "../UTILS/Error";
 
 export default function Room(props) {
+    const dispatch = useDispatch()
     const rooms = useSelector(state => state.rooms);
     const [room, setRoom] = useState("");
     const socket = useSelector(state => state.socket);
+
+    const checkUsername = new RegExp(
+        '^([A-Za-z0-9]{1,20})$'
+    );
 
     React.useEffect(() => {
         if (socket) {
@@ -21,6 +27,10 @@ export default function Room(props) {
     const createRoom = (e) => {
         if (!room)
             e.preventDefault()
+        else if (!checkUsername.test(room)) {
+            setRoom('')
+            dispatch(setError("room name should be alphanumeric and length less than 20!"))
+        }
         else {
             setRoom("")
             if (socket) {

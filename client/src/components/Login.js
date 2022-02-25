@@ -14,10 +14,17 @@ export default function Login (props) {
         setUserName(e.target.value)
     }
 
+    const checkUsername = new RegExp(
+        '^([A-Za-z0-9]{1,20})$'
+    );
+
     const submit = (e) => {
+        e.preventDefault()
         if (!username) {
-            e.preventDefault()
             dispatch(setError("you should enter a username first"))
+        }
+        else if (!checkUsername.test(username)) {
+            dispatch(setError("username should be alphanumeric and length less than 20!"))
         }
         else {
             document.cookie = `name=${username}`
