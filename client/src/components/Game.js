@@ -60,7 +60,7 @@ export default function Game() {
             <NextBlock />
             <ScoreBoard />
             <Controls />
-            <MessagePopup />
+            {/* <MessagePopup /> */}
         </>
     )
 }

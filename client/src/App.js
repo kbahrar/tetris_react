@@ -17,19 +17,26 @@ import Header from './components/UTILS/Header';
 function App() {
 	const auth = useSelector((state) => state.auth)
 	const room = useSelector((state) => state.room)
+	const [classes, setClasses] = React.useState('App App-login')
 	const navigate = useNavigate()
 
 	React.useEffect(() => {
-		if (!auth)
+		if (!auth) {
+			setClasses("App App-login");
 			navigate("/");
-		else if (!room)
+		}
+		else if (!room) {
+			setClasses("App App-room");
 			navigate("/rooms")
-		else
+		}
+		else {
+			setClasses("App App-Game");
 			navigate(`${room.name}[${auth.name}]`)
+		}
 	}, [auth, room, navigate])
 
 	return (
-		<div className="App">
+		<div className={classes}>
 			<Sockets>
 				<Header />
 				<Routes>
