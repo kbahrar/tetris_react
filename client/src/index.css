@@ -26,8 +26,8 @@
     --button-color-l: rgba(222, 222, 222, 1);
     --cols: 10;
     --rows: 20;
-    --tile-size: 4vh;
-    --tile-size-opo: 20px;
+    --tile-size: 1.88vw;
+    --tile-size-opo: 0.9vw;
     --border-width: 5px;
 }
 
@@ -35,18 +35,6 @@
 @font-face {
     font-family: 'GAME';
     src: url('./fonts/Games-XvD2\ 2.ttf');
-}
-
-@media only screen and (max-width: 900px) {
-     :root {
-        --tile-size: 20px;
-    }
-    * {
-        font-size: xx-small;
-    }
-    .username-label {
-        margin: none;
-    }
 }
 
 
@@ -227,11 +215,11 @@ code {
     border-radius: 10px 10px 0px 0px;
     color: white;
     font-size: large;
-    width: 200px;
+    width: calc(var(--tile-size-opo) * 10);
 }
 
 .select-dev {
-    width: 200px;
+    width: calc(var(--tile-size-opo) * 10);
     height: 50px;
     text-align: center;
     font-size: large;
@@ -267,6 +255,7 @@ code {
     grid-template-columns: repeat(4, var(--tile-size));
     align-self: flex-start;
     grid-area: l;
+    justify-content: center
 }
 
 
